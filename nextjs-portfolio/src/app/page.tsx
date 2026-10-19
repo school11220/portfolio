@@ -1,4 +1,7 @@
 import { aboutParagraphs, personalInfo, projects, skills } from "@/lib/data";
+import BB84Demo from "@/components/BB84Demo";
+import ProjectVideoDemo from "@/components/ProjectVideoDemo";
+import ProjectArchitecture from "@/components/ProjectArchitecture";
 
 const deploymentRef = process.env.VERCEL_GIT_COMMIT_REF ?? "vercel-prod";
 const deploymentSha = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? process.env.VERCEL_DEPLOYMENT_ID?.slice(-7) ?? "local";
@@ -57,7 +60,7 @@ export default function Home() {
             <div className="project-grid">{projects.map((project) => <article className="project-card" key={project.title}>
               <div className="project-top"><h3>{project.title.toLowerCase().replaceAll(" ", "-")}<span>/</span></h3><div className="project-meta"><code>-rwxr-xr-x</code></div></div>
               <p>{project.description}</p><div className="tags">{project.techStack.map((tech) => <span key={tech}>{tech}</span>)}{project.tag ? <span className="amber-tag">{project.tag}</span> : <span className="amber-tag">open source</span>}</div>
-              <div className="project-links">{project.link && <a href={project.link} target="_blank" rel="noreferrer">-&gt; live demo</a>}{project.links?.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">-&gt; {link.label.toLowerCase()}</a>)}{project.github && <a href={project.github} target="_blank" rel="noreferrer">-&gt; source</a>}</div>
+              <div className="project-links">{project.link && <a href={project.link} target="_blank" rel="noreferrer">-&gt; open live app</a>}{project.links?.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">-&gt; {link.label.toLowerCase()}</a>)}{project.github && <a href={project.github} target="_blank" rel="noreferrer">-&gt; source</a>}{project.title === "BB84 Quantum Messenger" && <BB84Demo />}{project.title === "SecureVault" && <ProjectVideoDemo title="SECUREVAULT / VAULT + GENERATOR WALKTHROUGH" src="/videos/securevault.mp4" poster="/images/securevault-video-poster.png" />}{project.title === "UNIX System Utility Toolkit" && <ProjectVideoDemo title="UNIX TOOLKIT / FEATURE WALKTHROUGH" src="/videos/unix-toolkit.mp4" poster="/images/unix-toolkit-video-poster.png" />}<ProjectArchitecture projectTitle={project.title} /></div>
             </article>)}</div>
           </section>
 

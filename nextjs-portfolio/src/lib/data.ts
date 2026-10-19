@@ -83,7 +83,7 @@ export const projects: Project[] = [
     title: "Cross-Market Disclosure Analysis",
     tag: "Major Project",
     description:
-      "A full-stack financial research dashboard that compares US SEC and Indian NSE/BSE corporate disclosures. It combines FastAPI, Next.js, Supabase pgvector retrieval, Gemini embeddings, and Groq-powered extraction, sentiment, risk, ratio, and chat workflows across matched companies.",
+      "A pilot research dashboard comparing US and Indian corporate disclosures across matched companies. Next.js and FastAPI serve document comparisons, extracted sentiment and risks, financial snapshots, benchmark results, and retrieval-grounded chat using Supabase pgvector, Gemini embeddings, and Groq generation.",
 
     techStack: ["Next.js", "Python", "PostgreSQL", "React"],
 
@@ -95,9 +95,9 @@ export const projects: Project[] = [
     title: "Hybrid CNN + Transformer Object Detection",
     tag: "Major Project",
     description:
-      "A lightweight autonomous-driving object-detection project using the KITTI dataset. It compares a CNN-only baseline with a CNN + Transformer detector, adds confidence-based refinement for uncertain detections, and evaluates both models with mAP@0.5.",
+      "A PyTorch computer-vision project comparing a ResNet18-based CNN detector with a CNN + Transformer model on KITTI-style data. Includes uncertainty-gated prediction refinement, checkpoint-based image inference, bounding-box visualization, and mAP@0.5 evaluation tools.",
 
-    techStack: ["Python"],
+    techStack: ["Python", "PyTorch"],
 
     github: "https://github.com/shivam2931120/MajorProject",
   },
@@ -105,7 +105,7 @@ export const projects: Project[] = [
   {
     title: "Nexus",
     description:
-      "A connected team workspace that brings communication, project and task management, documents, meetings, and shared workflows into one platform. Its Phase 1 vertical slice includes a Spring Boot modular backend, organization-scoped PostgreSQL data, JWT authentication, REST chat, WebSocket foundations, and a responsive Next.js shell.",
+      "An organization-scoped team workspace built with a Next.js frontend and Spring Boot modular monolith. Connects chat, projects, tasks, collaborative documents, forms, calendars, and meetings through PostgreSQL persistence, token authentication, REST APIs, and STOMP/WebSocket updates.",
 
     techStack: ["Next.js", "React", "Java", "PostgreSQL"],
 
@@ -117,7 +117,7 @@ export const projects: Project[] = [
     title: "BB84 Quantum Messenger",
     tag: "Mini Project",
     description:
-      "College mini project: a secure real-time messaging platform featuring end-to-end encryption via a simulated BB84 Quantum Key Distribution protocol, private and group chats, eavesdropping detection, media sharing, read receipts, and live presence.",
+      "An educational realtime messaging prototype built with Flask, Socket.IO, and SQLAlchemy. Supports private and group chats, media sharing, read receipts, presence, and a simulated BB84/eavesdropping demonstration for exploring messaging and protocol behavior.",
 
     techStack: ["Python", "Flask", "JavaScript", "PostgreSQL"],
 
@@ -128,7 +128,7 @@ export const projects: Project[] = [
   {
     title: "SecureVault",
     description:
-      "A web application for securely storing and managing encrypted vault items. Built with a security-first architecture, encrypted persistence, authentication, password generation, and a focused desktop vault experience.",
+      "A browser-encrypted vault for logins, secure notes, and API keys. Uses Web Crypto for PBKDF2-derived AES-GCM item encryption, with a configurable password generator, vault search and filtering, masked entries, and encrypted backup workflows.",
 
     techStack: ["Next.js", "React", "PostgreSQL"],
 
@@ -138,9 +138,9 @@ export const projects: Project[] = [
   {
     title: "TheMovie",
     description:
-      "A cutting-edge movie discovery and tracking application built with Next.js 16 and React 19. Features AI recommendations using Flask, Scikit-learn. Includes OMDB integration, Clerk auth, and Tailwind + Framer Motion UI.",
+      "A movie and TV discovery app with TMDB metadata, optional OMDb enrichment, Clerk sign-in, and PostgreSQL-backed lists, watch diary, and episode tracking. Next.js ranks personalized recommendations using taste signals, fresh candidates, and model artifacts prepared by offline Python workflows.",
 
-    techStack: ["Next.js", "React", "Clerk"],
+    techStack: ["Next.js", "React", "Clerk", "PostgreSQL"],
 
     link: "https://themovie.justshivamm.in",
     github: "https://github.com/shivam2931120/TheMovie",
@@ -149,7 +149,7 @@ export const projects: Project[] = [
   {
     title: "Neo",
     description:
-      "Your Personal Voice Assistant for system control, web search, weather, QR generation, screen recording, and monitoring.",
+      "A Python desktop voice assistant using speech recognition, phrase-based command routing, and text-to-speech responses. Connects Windows system controls, application launching, web search, weather, QR generation, screen recording, and system monitoring.",
 
     techStack: ["Python"],
 
@@ -159,7 +159,7 @@ export const projects: Project[] = [
   {
     title: "Shikshan - College Management System",
     description:
-      "Flask-based college ERP system with portals, attendance analytics, fee management, library, and exams.",
+      "A Flask and Jinja college ERP with admin, teacher, and student portals. Includes account approval, role-based workflows, attendance analytics, timetables, fees, library records, exams, and homework through SQLAlchemy with PostgreSQL or local SQLite storage.",
 
     techStack: ["Python", "Flask", "PostgreSQL"],
 
@@ -170,17 +170,17 @@ export const projects: Project[] = [
   {
     title: "Attendify",
     description:
-      "React-based attendance management app with analytics, timetable, bulk marking, and holiday management.",
+      "An Express attendance tracker with a browser JavaScript client and Clerk sign-in. Manages subjects, attendance history, timetables, calendar exclusions, and attendance analytics using account-scoped Clerk private metadata.",
 
-    techStack: ["JavaScript", "React", "CSS"],
+    techStack: ["JavaScript", "Express", "Clerk", "CSS"],
 
     link: "https://attendify.justshivamm.in",
-    github: "https://github.com/shivam2931120/attendance-tracker",
+    github: "https://github.com/shivam2931120/attendify",
   },
   {
     title: "EventHub",
     description:
-      "A full-stack event management and ticketing platform for organizers and attendees. It supports event publishing, ticket registration, secure QR ticket generation, payment flow tracking, staff check-in dashboards, duplicate scan prevention, and signed ticket token validation backed by PostgreSQL.",
+      "A Next.js event management and ticketing app with organizer dashboards, attendee registration, Razorpay payment signature verification, HMAC ticket-token generation, QR lookup, certificates, and check-in state updates through Prisma and PostgreSQL.",
 
     techStack: ["Next.js", "React", "PostgreSQL"],
 
@@ -190,7 +190,7 @@ export const projects: Project[] = [
   {
     title: "Editorial",
     description:
-      "A realtime collaborative document workspace inspired by Google Docs. It includes rich text editing, shared folders, comments, version history, document search, reusable templates, export flows, and live multi-user editing so teams can draft, review, and organize writing in one place.",
+      "A collaborative document workspace built with React, Tiptap, Express, and Supabase Postgres. Uses Yjs and Socket.IO for shared editing, alongside folders, comments, version history, search, document exports, and optional NVIDIA-backed writing assistance.",
 
     techStack: ["React", "Node.js", "PostgreSQL"],
 
@@ -200,7 +200,7 @@ export const projects: Project[] = [
   {
     title: "UNIX System Utility Toolkit",
     description:
-      "A lightweight, modular dashboard for Linux power users. Integrates essential system tools—Process Manager, Network Monitor, Service Control, and Algorithmic Simulators—into a single, easy-to-use graphical interface powered by Zenity. Built to demonstrate the power of shell scripting combined with high performance C modules.",
+      "A Linux desktop utility suite using a Bash launcher, Zenity dialogs, and compiled C helpers. Brings together process inspection and termination, network throughput monitoring, systemd service actions, a calculator, and CPU scheduling simulations with metrics and Gantt output.",
 
     techStack: ["Bash", "C", "Zenity"],
 
