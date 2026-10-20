@@ -42,3 +42,7 @@ Source inspection covered entry points, request/event handlers, persistence code
 ## Graph-focused presentation
 
 Architecture dialogs omit introductory copy, provenance banners, written step lists, inspector panels, and implementation-note blocks. Project identity, flow selection, compact playback controls, zoom, export, and the graph remain visible. Source context and caveats remain in this document and in exported SVG metadata.
+
+## Production deployment
+
+The production Vercel project `shivam-portfolio` is connected to `school11220/portfolio`, branch `main`. Its Root Directory must be `nextjs-portfolio`, where the Next.js package and build script live. Push releases to that repository using the connected GitHub account so Vercel can verify the commit author.
