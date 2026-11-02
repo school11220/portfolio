@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, JetBrains_Mono } from "next/font/google";
+import PortfolioChat from "@/components/PortfolioChat";
 import "./globals.css";
 
 const jetBrains = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mono", display: "swap" });
@@ -16,5 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${jetBrains.variable} ${plex.variable}`}><body>{children}</body></html>;
+  return <html lang="en" className={`${jetBrains.variable} ${plex.variable}`}><body>{children}<PortfolioChat /></body></html>;
 }

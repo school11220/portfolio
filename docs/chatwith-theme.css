@@ -1,0 +1,51 @@
+/* Paste into Chatwith → Appearance → Custom CSS for the Neo agent.
+   The embedded agent currently keeps its saved light palette even with
+   ?theme=dark. Host-page CSS cannot reach inside Chatwith's iframe. */
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: "JetBrains Mono", "IBM Plex Mono", monospace !important;
+}
+
+[style*="--cw-widget-background"] {
+  --cw-widget-background: #050805 !important;
+  --cw-header: #070d08 !important;
+  --cw-header-contrast: #39ff7a !important;
+  --cw-user-message: #153b20 !important;
+  --cw-user-message-contrast: #eafff1 !important;
+  --cw-assistant-message: #0c170f !important;
+  --cw-assistant-message-contrast: #d4e5d8 !important;
+  --cw-composer: #080f0a !important;
+  --cw-composer-contrast: #eafff1 !important;
+  background: #050805 !important;
+  color: #d4e5d8 !important;
+}
+
+[style*="--cw-brand"] {
+  --cw-brand: #39ff7a !important;
+  --cw-brand-contrast: #001c08 !important;
+  --cw-brand-soft: rgb(57 255 122 / 10%) !important;
+  --cw-brand-ring: rgb(57 255 122 / 22%) !important;
+}
+
+#chatwith-chat-header {
+  background-image: none !important;
+  border-bottom: 1px solid #143614 !important;
+}
+
+.chatwith-chat-bubble-assistant {
+  border: 1px solid #143614 !important;
+  border-radius: 4px !important;
+}
+
+textarea,
+input {
+  color: #eafff1 !important;
+  caret-color: #39ff7a;
+}
+
+textarea::placeholder,
+input::placeholder { color: #8eb197 !important; }
