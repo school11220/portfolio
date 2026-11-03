@@ -33,9 +33,11 @@ export async function reserveModelBudget(ip: string, estimatedTokens: number): P
         body: JSON.stringify(["EVAL", lua, "3", ...keys, "6", "25", String(estimatedTokens), String(budget)]),
         signal: AbortSignal.timeout(3000), cache: "no-store",
       });
-      if (!response.ok) return false;
-      const data = await response.json(); return !data.error && data.result === 1;
-    } catch { return false; }
+      if (!response.ok) { console.warn("neo.quota.unavailable", { status: response.status }); return false; }
+      const data = await response.json();
+      if (data.error) console.warn("neo.quota.command_rejected");
+      return !data.error && data.result === 1;
+    } catch (error) { console.warn("neo.quota.unavailable", { reason: error instanceof Error ? error.name : "unknown" }); return false; }
   }
   // Development convenience only. Production never substitutes process memory
   // for a shared budget: it serves verified notes without making a model call.

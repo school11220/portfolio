@@ -70,8 +70,8 @@ export async function POST(request: Request) {
       body: JSON.stringify({ model, ...(model.startsWith("qwen/") ? { reasoning_effort: "none", reasoning_format: "hidden" } : {}), messages: prompt, stream: true, temperature: .2, max_completion_tokens: 480 }),
       signal, cache: "no-store",
     });
-    if (!upstream.ok || !upstream.body) { await upstream.body?.cancel(); return fallback(); }
-  } catch { return fallback(); }
+    if (!upstream.ok || !upstream.body) { console.warn("neo.model.unavailable", { status: upstream.status }); await upstream.body?.cancel(); return fallback(); }
+  } catch (error) { console.warn("neo.model.unavailable", { reason: error instanceof Error ? error.name : "unknown" }); return fallback(); }
 
   return new Response(new ReadableStream({
     async start(controller) {
