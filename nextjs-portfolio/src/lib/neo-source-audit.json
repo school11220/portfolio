@@ -2,7 +2,7 @@
   "market": {
     "repository": "Hrudai-Nirmal/MajorProject-new",
     "revision": "ee61ca71b213ea2c793de0839d8a9be09bab7b28",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "README.md": {
         "verified": true,
@@ -31,6 +31,14 @@
       "scripts/embed_and_store.py": {
         "verified": true,
         "lines": 113
+      },
+      "benchmark/metrics.json": {
+        "verified": true,
+        "lines": 60
+      },
+      "backend/app/services/retrieval.py": {
+        "verified": true,
+        "lines": 17
       }
     },
     "workingTree": false
@@ -38,7 +46,7 @@
   "detection": {
     "repository": "shivam2931120/MajorProject",
     "revision": "479934b5e340f9c755285f6d53bcc4e584d9b1c4",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "scripts/import_kitti.py": {
         "verified": true,
@@ -63,6 +71,10 @@
       "src/train.py": {
         "verified": true,
         "lines": 265
+      },
+      "src/utils/losses.py": {
+        "verified": true,
+        "lines": 148
       }
     },
     "workingTree": false
@@ -70,7 +82,7 @@
   "nexus": {
     "repository": "shivam2931120/Nexus",
     "revision": "f3225837b0145cf6e3768e02bcaa90f8adf5085e",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "backend/src/main/java/com/nexus/chat/WebSocketConfig.java": {
         "verified": true,
@@ -106,7 +118,7 @@
   "bb84": {
     "repository": "shivam2931120/bb8_messenger_app",
     "revision": "9d1dd49d11c3a054a07ef66611ccd3cb876061ce",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "app.py": {
         "verified": true,
@@ -122,7 +134,7 @@
   "securevault": {
     "repository": "shivam2931120/SecureVault",
     "revision": "02dad3de8389b1d38003b0ad3bf0a90ccaa006bb",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "app/api/vault/route.ts": {
         "verified": true,
@@ -147,6 +159,10 @@
       "stores/authStore.ts": {
         "verified": true,
         "lines": 100
+      },
+      "app/api/auth/register/route.ts": {
+        "verified": true,
+        "lines": 58
       }
     },
     "workingTree": false
@@ -154,7 +170,7 @@
   "movie": {
     "repository": "shivam2931120/TheMovie",
     "revision": "d2240c74229c2cc5194614ac65508cc9289748a2",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "ml/train_feedback.py": {
         "verified": true,
@@ -183,6 +199,10 @@
       "src/proxy.ts": {
         "verified": true,
         "lines": 29
+      },
+      "ml/README.md": {
+        "verified": true,
+        "lines": 201
       }
     },
     "workingTree": false
@@ -190,7 +210,7 @@
   "neo": {
     "repository": "shivam2931120/Neo",
     "revision": "7e12a12a97f3526c09f210fa4bae62249de1a280",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "neo.py": {
         "verified": true,
@@ -202,7 +222,7 @@
   "sms": {
     "repository": "shivam2931120/sms",
     "revision": "09a8732445b5b7431ac056ad1d1fa35ef5686633",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "app/__init__.py": {
         "verified": true,
@@ -227,6 +247,10 @@
       "config.py": {
         "verified": true,
         "lines": 111
+      },
+      "app/routes/teacher.py": {
+        "verified": true,
+        "lines": 249
       }
     },
     "workingTree": false
@@ -234,7 +258,7 @@
   "attendify": {
     "repository": "shivam2931120/attendify",
     "revision": "cf24ebfe9ea66c1849786b511995e99b5a2257cf",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "app.js": {
         "verified": true,
@@ -266,7 +290,7 @@
   "eventhub": {
     "repository": "shivam2931120/EventHub",
     "revision": "28effad60921092b6f104b62e5eb99509f6aa051",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "app/api/checkin/route.ts": {
         "verified": true,
@@ -295,6 +319,10 @@
       "prisma/schema.prisma": {
         "verified": true,
         "lines": 189
+      },
+      "lib/phonepe.ts": {
+        "verified": true,
+        "lines": 139
       }
     },
     "workingTree": false
@@ -302,7 +330,7 @@
   "editorial": {
     "repository": "shivam2931120/realtime_collab",
     "revision": "a1a8b8c6982e75822840abf530965d8cc0b38a11",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "backend/src/controllers/aiController.ts": {
         "verified": true,
@@ -327,6 +355,10 @@
       "frontend/src/pages/Editor.tsx": {
         "verified": true,
         "lines": 3716
+      },
+      "frontend/src/services/renameDocument.ts": {
+        "verified": true,
+        "lines": 14
       }
     },
     "workingTree": false
@@ -334,7 +366,7 @@
   "unix": {
     "repository": "shivam2931120/unix_mini_project",
     "revision": "3fb4edf5f6eb26a81019b2b194ec673bd33d767a",
-    "reviewedAt": "2026-11-02",
+    "reviewedAt": "2026-11-03",
     "files": {
       "proc_manager.c": {
         "verified": true,

@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { ChatEvent, ChatMeta } from "@/lib/neo-types";
+import type { ChatContext, ChatEvent, ChatMeta } from "@/lib/neo-types";
+import { projectAliases } from "@/lib/neo/language";
 import { personalInfo, projects } from "@/lib/data";
 import styles from "./PortfolioChat.module.css";
 
 type Message = { id: string; role: "user" | "assistant"; content: string; meta?: ChatMeta; error?: string };
 const storageKey = "portfolio-neo-v2";
+const topicStorageKey = "portfolio-neo-topic-v1";
 const welcome: Message = { id: "welcome", role: "assistant", content: "Hi, I’m Neo. Ask me about Shivam’s projects, how they work, or the engineering behind them. I can point you to the code and architecture, too." };
 const suggestions = ["What have you built?", "How does SecureVault encrypt data?", "Compare your realtime projects", "Show me your AI projects"];
 const publicLinks = new Set([...Object.values(personalInfo), ...projects.flatMap((p) => [p.link, p.github, ...(p.links?.map((link) => link.href) ?? [])])].filter((value): value is string => typeof value === "string" && value.startsWith("https://")));
@@ -31,9 +33,12 @@ export default function PortfolioChat() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<AbortController | null>(null);
   const followRef = useRef(true);
+  const topicRef = useRef<ChatContext | undefined>(undefined);
 
   useEffect(() => {
     try {
+      const topic = JSON.parse(sessionStorage.getItem(topicStorageKey) ?? "null");
+      if (topic && Array.isArray(topic.projects) && topic.projects.length <= 6 && topic.projects.every((p: unknown) => typeof p === "string" && Object.hasOwn(projectAliases, p)) && typeof topic.question === "string" && topic.question.length <= 800) topicRef.current = topic;
       const saved = JSON.parse(sessionStorage.getItem(storageKey) ?? "null");
       if (Array.isArray(saved) && saved.length <= 24 && saved.every((m) => m && ["user", "assistant"].includes(m.role) && typeof m.content === "string" && m.content.length <= 16000)) {
         // Saved content is untrusted. Restore plain text, never stored URLs/actions.
@@ -86,13 +91,18 @@ export default function PortfolioChat() {
     const update = (patch: Partial<Message>) => setMessages((previous) => previous.map((m) => m.id === id ? { ...m, ...patch } : m));
     let reply = ""; let complete = false;
     function accept(event: ChatEvent) {
-      if (event.type === "meta") update({ meta: event });
+      if (event.type === "meta") {
+        update({ meta: event });
+        topicRef.current = event.context;
+        try { if (event.context) sessionStorage.setItem(topicStorageKey, JSON.stringify(event.context)); } catch { /* Optional topic memory. */ }
+      }
       if (event.type === "delta") { reply += event.text; update({ content: reply }); }
+      if (event.type === "replace") { reply = event.text; update({ content: reply }); }
       if (event.type === "error") update({ error: event.text });
       if (event.type === "done") complete = true;
     }
     try {
-      const response = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: context }), signal: controller.signal });
+      const response = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: context, context: topicRef.current }), signal: controller.signal });
       if (!response.ok || !response.body) throw new Error("request");
       const reader = response.body.getReader(); const decoder = new TextDecoder(); let pending = "";
       try {
@@ -113,7 +123,8 @@ export default function PortfolioChat() {
 
   function clearChat() {
     requestRef.current?.abort(); requestRef.current = null; setBusy(false); setMessages([welcome]); setDraft(""); setAnnouncement("Conversation cleared.");
-    try { sessionStorage.removeItem(storageKey); } catch { /* Optional storage. */ }
+    topicRef.current = undefined;
+    try { sessionStorage.removeItem(storageKey); sessionStorage.removeItem(topicStorageKey); } catch { /* Optional storage. */ }
     inputRef.current?.focus();
   }
 

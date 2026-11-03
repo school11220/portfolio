@@ -48,3 +48,5 @@ Architecture dialogs omit introductory copy, provenance banners, written step li
 The production Vercel project `shivam-portfolio` is connected to `school11220/portfolio`, branch `main`. Its Root Directory must be `nextjs-portfolio`, where the Next.js package and build script live. Push releases to that repository using the connected GitHub account so Vercel can verify the commit author.
 
 Neo source refresh (2026-11-02): all 12 repositories were checked again. Editorial was updated to a1a8b8c; the reviewed backend source paths are unchanged and its updated editor source was inspected. The complete pinned file manifest lives in `nextjs-portfolio/src/lib/neo-source-audit.json`.
+
+Neo accuracy refresh (2026-11-03): the same pinned project snapshots now have 32 deeper evidence records with line ranges and code anchors, covering 72 source files in total. See `docs/neo-accuracy.md`; model-answer accuracy is not inferred from source-file existence alone.

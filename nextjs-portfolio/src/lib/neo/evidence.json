@@ -1,0 +1,562 @@
+[
+  {
+    "id": "market-evidence-metrics",
+    "project": "market",
+    "title": "Disclosure benchmark: measured results",
+    "terms": "benchmark results macro f1 accuracy score sentiment evaluation US India gap",
+    "text": "The checked-in benchmark/metrics.json reports 128 labeled rows, split into 64 US and 64 India rows. US macro-F1 is 0.7167224080 (about 0.717) and India macro-F1 is 0.6534621578 (about 0.653); the US-minus-India gap is 0.0632602502. US accuracy is 0.84375 and India accuracy is 0.765625. These are pilot benchmark results, not a general production accuracy guarantee. Label provenance must be read with the separate provenance record.",
+    "file": "benchmark/metrics.json",
+    "startLine": 1,
+    "endLine": 60,
+    "anchors": [
+      "\"total_benchmark_rows\"",
+      "\"macro_f1_us\"",
+      "\"macro_f1_india\"",
+      "\"accuracy\""
+    ],
+    "revision": "ee61ca71b213ea2c793de0839d8a9be09bab7b28",
+    "repository": "Hrudai-Nirmal/MajorProject-new"
+  },
+  {
+    "id": "market-evidence-provenance",
+    "project": "market",
+    "title": "Disclosure benchmark: label provenance and scope",
+    "terms": "benchmark labels gold human annotation limitations dataset documents pilot",
+    "text": "The README labels this a pilot/proof of concept: 32 documents and 128 benchmark chunks. Its gold-label provenance is AI-adjudicated, not independently hand-labeled. The research question is cross-market generalization across matched US/India companies; the reported gap is not an independently human-validated production accuracy figure.",
+    "file": "README.md",
+    "startLine": 49,
+    "endLine": 58,
+    "anchors": [
+      "32 documents / 128 benchmark chunks",
+      "AI-adjudicated, not independently hand-labeled"
+    ],
+    "revision": "ee61ca71b213ea2c793de0839d8a9be09bab7b28",
+    "repository": "Hrudai-Nirmal/MajorProject-new"
+  },
+  {
+    "id": "market-evidence-retrieval",
+    "project": "market",
+    "title": "Disclosure RAG: query retrieval and market filter",
+    "terms": "question vector similarity top k filter market rag retrieve pgvector Gemini",
+    "text": "retrieve_top_k embeds the question with Gemini using task_type=\"retrieval_query\", then calls the Supabase match_chunks RPC with query_embedding and match_count. An optional market supplies filter_market. The default k is 5. This is retrieval at request time; embedding/ingesting the stored corpus is a separate preparation workflow.",
+    "file": "backend/app/services/retrieval.py",
+    "startLine": 3,
+    "endLine": 17,
+    "anchors": [
+      "def retrieve_top_k",
+      "task_type=\"retrieval_query\"",
+      "filter_market",
+      "client.rpc"
+    ],
+    "revision": "ee61ca71b213ea2c793de0839d8a9be09bab7b28",
+    "repository": "Hrudai-Nirmal/MajorProject-new"
+  },
+  {
+    "id": "detection-evidence-gate",
+    "project": "detection",
+    "title": "Detector: uncertainty-gated refinement formula",
+    "terms": "uncertain uncertainty confidence gate formula sigma refinement boxes 0.5 exp",
+    "text": "The confidence gate is exp(-((conf - 0.5)^2)/(2 * refinement_sigma^2)); refinement_sigma defaults to 0.12. Confidence is sigmoid(objectness logits). The gate peaks near confidence 0.5 and scales learned MLP corrections to objectness, box offsets and class logits. It is not a second independent detector or proof of improved mAP.",
+    "file": "src/models/hybrid_cnn_transformer.py",
+    "startLine": 18,
+    "endLine": 85,
+    "anchors": [
+      "refinement_sigma: float = 0.12",
+      "def _uncertainty_gate",
+      "return torch.exp",
+      "obj_logits_ref ="
+    ],
+    "revision": "479934b5e340f9c755285f6d53bcc4e584d9b1c4",
+    "repository": "shivam2931120/MajorProject"
+  },
+  {
+    "id": "detection-evidence-decode",
+    "project": "detection",
+    "title": "Detector: decoding, confidence and NMS",
+    "terms": "inference boxes decode confidence non maximum suppression nms score",
+    "text": "decode_predictions converts grid box predictions into normalized xyxy boxes. The score combines sigmoid objectness with the maximum softmax class probability; confidence filtering and torchvision NMS then remove weak/overlapping candidates. The loss utilities and inference path describe mechanics, not a measured production mAP score.",
+    "file": "src/utils/losses.py",
+    "startLine": 6,
+    "endLine": 77,
+    "anchors": [
+      "def _decode_boxes",
+      "def decode_predictions",
+      "score = obj_prob * cls_score",
+      "nms("
+    ],
+    "revision": "479934b5e340f9c755285f6d53bcc4e584d9b1c4",
+    "repository": "shivam2931120/MajorProject"
+  },
+  {
+    "id": "detection-evidence-missing",
+    "project": "detection",
+    "title": "Detector: training prerequisites and result limits",
+    "terms": "training dataset missing checkpoint benchmark results score map production",
+    "text": "Training imports KITTIDataset, split construction and class-frequency helpers from src.data. That package is absent in the reviewed tree even though the README lists it. A runnable training setup needs that implementation restored and inference needs a trained checkpoint. The reviewed evidence does not report a verified production mAP score; do not invent an accuracy improvement over the CNN baseline.",
+    "file": "src/train.py",
+    "startLine": 8,
+    "endLine": 174,
+    "anchors": [
+      "from src.data import",
+      "DataLoader",
+      "AdamW"
+    ],
+    "revision": "479934b5e340f9c755285f6d53bcc4e584d9b1c4",
+    "repository": "shivam2931120/MajorProject"
+  },
+  {
+    "id": "nexus-evidence-stomp",
+    "project": "nexus",
+    "title": "Nexus: WebSocket authentication and per-destination access",
+    "terms": "websocket stomp connect subscribe send authorization private membership channel document token",
+    "text": "The STOMP interceptor requires a Bearer token on CONNECT and resolves local JWT or Clerk identity. SEND and SUBSCRIBE require an authenticated user. Channel access checks organization membership, team membership when applicable, and channel membership for PRIVATE channels. Document destinations check organization/team membership and exclude soft-deleted documents. Authentication alone does not imply permission to every room.",
+    "file": "backend/src/main/java/com/nexus/chat/WebSocketConfig.java",
+    "startLine": 74,
+    "endLine": 124,
+    "anchors": [
+      "StompCommand.CONNECT",
+      "StompCommand.SUBSCRIBE",
+      "c.type<>'PRIVATE'",
+      "private boolean canAccessDocument"
+    ],
+    "revision": "f3225837b0145cf6e3768e02bcaa90f8adf5085e",
+    "repository": "shivam2931120/Nexus"
+  },
+  {
+    "id": "nexus-evidence-security",
+    "project": "nexus",
+    "title": "Nexus: HTTP security boundaries",
+    "terms": "security bcrypt password jwt token auth authentication public protected routes",
+    "text": "Spring Security supplies BCryptPasswordEncoder and protects ordinary API requests with authenticated(). Explicit auth, public forms/shared files, health, docs and WebSocket handshake paths are permitted at the HTTP boundary. JWT and optional Clerk identity filters handle request identity. A public WebSocket handshake still has STOMP authentication and destination authorization; do not interpret permitAll on /ws as unrestricted room access.",
+    "file": "backend/src/main/java/com/nexus/security/SecurityConfig.java",
+    "startLine": 16,
+    "endLine": 50,
+    "anchors": [
+      "BCryptPasswordEncoder",
+      "requestMatchers",
+      "anyRequest().authenticated"
+    ],
+    "revision": "f3225837b0145cf6e3768e02bcaa90f8adf5085e",
+    "repository": "shivam2931120/Nexus"
+  },
+  {
+    "id": "nexus-evidence-scope",
+    "project": "nexus",
+    "title": "Nexus: scoped workspace requests",
+    "terms": "organization workspace team tasks docs persistence actor scope REST",
+    "text": "WorkspaceController resolves the current user and organization context for workspace operations, queries organization-scoped records and writes audit events. Its endpoints work with workspace domain records through JdbcTemplate. This is evidence of implemented request scoping and persistence, not a verified statement of the author\u2019s personal reason for choosing Java or Spring.",
+    "file": "backend/src/main/java/com/nexus/workspace/WorkspaceController.java",
+    "startLine": 16,
+    "endLine": 90,
+    "anchors": [
+      "class WorkspaceController",
+      "organization",
+      "audit.events"
+    ],
+    "revision": "f3225837b0145cf6e3768e02bcaa90f8adf5085e",
+    "repository": "shivam2931120/Nexus"
+  },
+  {
+    "id": "bb84-evidence-keys",
+    "project": "bb84",
+    "title": "BB84 messenger: what key generation actually does",
+    "terms": "quantum qkd actual simulation random hash pair keys end to end security",
+    "text": "bb84_protocol hashes Python random values with SHA-256 and returns a binary string; it does not implement actual quantum key distribution. xor_encrypt_decrypt XORs UTF-8 bytes using repeated individual binary key digits and stores Base64. shared_keys is a server-memory dictionary indexed by the sorted user pair. This educational path should not be called secure end-to-end quantum messaging.",
+    "file": "app.py",
+    "startLine": 310,
+    "endLine": 363,
+    "anchors": [
+      "def bb84_protocol",
+      "def xor_encrypt_decrypt",
+      "shared_keys = {}"
+    ],
+    "revision": "9d1dd49d11c3a054a07ef66611ccd3cb876061ce",
+    "repository": "shivam2931120/bb8_messenger_app"
+  },
+  {
+    "id": "bb84-evidence-payload",
+    "project": "bb84",
+    "title": "BB84 messenger: send payload and exposure",
+    "terms": "send message plaintext key encrypted payload socket delivery security leakage",
+    "text": "The send_message socket handler generates/gets a server-held key, stores an encoded message, and emits a payload containing the original plaintext message, encrypted form and key. That means the server handles plaintext and supplies the key; encrypted database text alone does not make the design end-to-end encrypted. This is distinct from the portfolio Alice/Bob/Eve demonstration.",
+    "file": "app.py",
+    "startLine": 823,
+    "endLine": 893,
+    "anchors": [
+      "def handle_send_message",
+      "\"key\": key",
+      "\"encrypted\":"
+    ],
+    "revision": "9d1dd49d11c3a054a07ef66611ccd3cb876061ce",
+    "repository": "shivam2931120/bb8_messenger_app"
+  },
+  {
+    "id": "securevault-evidence-crypto",
+    "project": "securevault",
+    "title": "SecureVault: password derivation and item encryption",
+    "terms": "protect saved passwords encryption decrypt master key salt iterations pbkdf2 aes iv",
+    "text": "Web Crypto derives a non-extractable 256-bit AES-GCM key with PBKDF2-SHA-256 and 100,000 iterations. generateSalt uses 16 random bytes; generateIV uses a random 12-byte IV. Vault item objects are JSON-encoded and encrypted/decrypted locally. Ciphertext and IV can be persisted, while this encryption mechanism alone is not a security audit of authentication or deployment.",
+    "file": "lib/crypto.ts",
+    "startLine": 4,
+    "endLine": 243,
+    "anchors": [
+      "PBKDF2_ITERATIONS = 100000",
+      "new Uint8Array(16)",
+      "new Uint8Array(12)",
+      "export async function encryptVaultItem"
+    ],
+    "revision": "02dad3de8389b1d38003b0ad3bf0a90ccaa006bb",
+    "repository": "shivam2931120/SecureVault"
+  },
+  {
+    "id": "securevault-evidence-unlock",
+    "project": "securevault",
+    "title": "SecureVault: reload, lock and demo bypass",
+    "terms": "refresh reload persist browser localstorage master key unlock verifier rehydrate demo bypass",
+    "text": "The Zustand auth store partialize persists user, salt, keyVerifier and isAuthenticated in localStorage, but does not persist masterKey. lock() clears masterKey. After refreshing, rehydrateSession derives a new candidate key and normally checks the encrypted verifier. The reviewed code also has a demo/Demo password bypass and initializes a local-vault user with isAuthenticated=true. Describe these as demo-specific behavior, not production authentication guarantees.",
+    "file": "stores/authStore.ts",
+    "startLine": 17,
+    "endLine": 90,
+    "anchors": [
+      "lock: ()",
+      "rehydrateSession",
+      "Demo password bypass",
+      "partialize:"
+    ],
+    "revision": "02dad3de8389b1d38003b0ad3bf0a90ccaa006bb",
+    "repository": "shivam2931120/SecureVault"
+  },
+  {
+    "id": "securevault-evidence-register",
+    "project": "securevault",
+    "title": "SecureVault: registration verifier",
+    "terms": "register login server password salt encrypted verifier authentication",
+    "text": "Registration validates the email, salt and encrypted verifier fields and their Base64 format, then calls vaultDB.register with the encryptedData and IV verifier payload. The request contract does not ask for the plaintext master password. This route describes verifier storage, not an audited production session/authentication guarantee.",
+    "file": "app/api/auth/register/route.ts",
+    "startLine": 2,
+    "endLine": 48,
+    "anchors": [
+      "verifierEncryptedData",
+      "isBase64",
+      "vaultDB.register"
+    ],
+    "revision": "02dad3de8389b1d38003b0ad3bf0a90ccaa006bb",
+    "repository": "shivam2931120/SecureVault"
+  },
+  {
+    "id": "movie-evidence-offline",
+    "project": "movie",
+    "title": "TheMovie: offline model versus live personalization",
+    "terms": "retrain online watches ratings feedback recommendations learning model SVD tf idf MovieLens",
+    "text": "The shipped movie-to-movie graph combines MovieLens user-rating SVD similarity, title/genre/tag TF-IDF similarity and Bayesian rating quality. The live Next.js personalization layer combines graph neighbors with the current user feedback; the graph itself does not retrain whenever a user watches or rates a title. MovieLens has no TV interaction data. Opt-in application feedback is a separate offline export/training/promotion pipeline.",
+    "file": "ml/README.md",
+    "startLine": 2,
+    "endLine": 11,
+    "anchors": [
+      "does not retrain",
+      "TF-IDF",
+      "MovieLens has no"
+    ],
+    "revision": "d2240c74229c2cc5194614ac65508cc9289748a2",
+    "repository": "shivam2931120/TheMovie"
+  },
+  {
+    "id": "movie-evidence-metrics",
+    "project": "movie",
+    "title": "TheMovie: measured recommendation results",
+    "terms": "NDCG recall precision hit rate normalization benchmark results improvement validation test raw",
+    "text": "The corrected temporal evaluation reports test NDCG@20 0.09228, Recall@20 0.04106, Precision@20 0.085 and hit rate 0.50 for the raw SVD baseline. Only 14 validation and 30 test users qualify. Centered/scaled normalization did not beat that baseline; RATING_NORMALIZATION stays raw and shipped artifacts remain unchanged. These small returning-user-cohort results are not a general production performance claim.",
+    "file": "ml/README.md",
+    "startLine": 55,
+    "endLine": 66,
+    "anchors": [
+      "0.09228",
+      "0.04106",
+      "30 test users",
+      "RATING_NORMALIZATION"
+    ],
+    "revision": "d2240c74229c2cc5194614ac65508cc9289748a2",
+    "repository": "shivam2931120/TheMovie"
+  },
+  {
+    "id": "movie-evidence-ranking",
+    "project": "movie",
+    "title": "TheMovie: request-time ranking and graph blend",
+    "terms": "recommendation personalize backend Flask Next.js blend weights seed limit rank",
+    "text": "The active /api/ai-recommend route is a Next.js handler that imports static recommendation, feedback and search-index artifacts. It blends the existing graph at weight 0.8 with the feedback graph at weight 1, parses bounded seed/candidate IDs and invokes rankRecommendations. It does not call a Flask inference server or train a model on each request.",
+    "file": "src/app/api/ai-recommend/route.ts",
+    "startLine": 3,
+    "endLine": 15,
+    "anchors": [
+      "rankRecommendations",
+      "weight:0.8",
+      "MAX_SEED_IDS = 20",
+      "MAX_RESULTS = 20"
+    ],
+    "revision": "d2240c74229c2cc5194614ac65508cc9289748a2",
+    "repository": "shivam2931120/TheMovie"
+  },
+  {
+    "id": "neo-evidence-recognition",
+    "project": "neo",
+    "title": "Desktop Neo: speech recognition and voice output",
+    "terms": "voice microphone speech recognizer recognition google pyttsx3 offline online internet",
+    "text": "The desktop Python Neo initializes pyttsx3 for speech output. Its microphone recognizer adjusts for ambient noise and calls recognize_google(audio, language=\"en-US\"). Therefore the recognition path uses Google speech recognition and should not be described as fully offline. This project is separate from the portfolio chatbot named Neo.",
+    "file": "neo.py",
+    "startLine": 35,
+    "endLine": 63,
+    "anchors": [
+      "engine = pyttsx3.init()",
+      "adjust_for_ambient_noise",
+      "recognize_google"
+    ],
+    "revision": "7e12a12a97f3526c09f210fa4bae62249de1a280",
+    "repository": "shivam2931120/Neo"
+  },
+  {
+    "id": "neo-evidence-dispatch",
+    "project": "neo",
+    "title": "Desktop Neo: command routing rather than an LLM",
+    "terms": "llm intelligence AI phrase commands dispatcher if elif windows controls",
+    "text": "The main desktop assistant loop dispatches recognized text through explicit if/elif phrase checks for website/file opening, searches, alarms, weather, volume, shutdown and other actions. This inspected command path is a phrase dispatcher, not an LLM chat-completion backend. Several actions are Windows-specific; they run with the desktop user permissions.",
+    "file": "neo.py",
+    "startLine": 1048,
+    "endLine": 1129,
+    "anchors": [
+      "if \"open website\" in query",
+      "elif \"weather\" in query",
+      "elif \"shutdown system\" in query"
+    ],
+    "revision": "7e12a12a97f3526c09f210fa4bae62249de1a280",
+    "repository": "shivam2931120/Neo"
+  },
+  {
+    "id": "sms-evidence-attendance",
+    "project": "sms",
+    "title": "Shikshan: teacher attendance update and scope",
+    "terms": "college erp attendance marking duplicate student date teacher assigned classes SQLAlchemy",
+    "text": "The teacher attendance route requires the teacher role, resolves assigned class IDs, validates the chosen date and rejects an unassigned class. For each student it queries Attendance by student_id and date, updates an existing row or inserts a new row, then commits the batch. This application-level check is not a claim of an atomic uniqueness constraint against concurrent requests.",
+    "file": "app/routes/teacher.py",
+    "startLine": 105,
+    "endLine": 156,
+    "anchors": [
+      "def mark_attendance",
+      "selected_class_id not in class_ids",
+      "existing = Attendance.query.filter_by",
+      "existing.status = status"
+    ],
+    "revision": "09a8732445b5b7431ac056ad1d1fa35ef5686633",
+    "repository": "shivam2931120/sms"
+  },
+  {
+    "id": "sms-evidence-models",
+    "project": "sms",
+    "title": "Shikshan: relational records",
+    "terms": "college school erp SQLAlchemy database students teachers attendance fee exams library schema",
+    "text": "The Flask SQLAlchemy model layer includes User, Teacher, Student, Class, Subject, Attendance, Exam, Mark, Fee, TimeTable, Book, BookIssue and role/permission records. A student has attendance, marks and fees relationships; Attendance stores student/date/status data. The reviewed app supports PostgreSQL or local SQLite configuration rather than storing these records in Clerk metadata.",
+    "file": "app/models.py",
+    "startLine": 78,
+    "endLine": 195,
+    "anchors": [
+      "class Student",
+      "class Attendance",
+      "class Fee",
+      "class BookIssue"
+    ],
+    "revision": "09a8732445b5b7431ac056ad1d1fa35ef5686633",
+    "repository": "shivam2931120/sms"
+  },
+  {
+    "id": "attendify-evidence-metadata",
+    "project": "attendify",
+    "title": "Attendify: metadata persistence and default accounts",
+    "terms": "attendance tracker store database React Express Clerk metadata records user profile",
+    "text": "DataService loads the signed-in Clerk user and reads user.privateMetadata.attendify. It returns default profile/subjects/timetable data for an empty account without writing until an explicit save. save operations update Clerk private metadata rather than a separate React database. The profile attendance requirement defaults to 75 and is normalized/clamped to 0\u2013100.",
+    "file": "services/dataService.js",
+    "startLine": 19,
+    "endLine": 81,
+    "anchors": [
+      "user.privateMetadata",
+      "Empty accounts remain read-only",
+      "privateMetadata: { attendify: userData }",
+      "attendance_requirement_percentage: 75.0"
+    ],
+    "revision": "cf24ebfe9ea66c1849786b511995e99b5a2257cf",
+    "repository": "shivam2931120/attendify"
+  },
+  {
+    "id": "attendify-evidence-calendar",
+    "project": "attendify",
+    "title": "Attendify: cross-device calendar exclusions",
+    "terms": "holiday merge cancellation different devices calendar holidayDates cancelledDates date keyed concurrency",
+    "text": "CalendarService stores exclusions in privateMetadata.attendify_calendar. It normalizes valid YYYY-MM-DD dates, deduplicates holidays/cancellations, and applies date-keyed holidayDates and cancelledDates patches so devices editing different dates avoid replacing the entire collection. isExcluded checks a holiday or a subject-specific cancellation. This is not a claim of a database-wide transaction across all attendance operations.",
+    "file": "services/calendarService.js",
+    "startLine": 14,
+    "endLine": 44,
+    "anchors": [
+      "Date-keyed patches",
+      "holidayDates",
+      "cancelledDates",
+      "attendify_calendar",
+      "function isExcluded"
+    ],
+    "revision": "cf24ebfe9ea66c1849786b511995e99b5a2257cf",
+    "repository": "shivam2931120/attendify"
+  },
+  {
+    "id": "eventhub-evidence-payment",
+    "project": "eventhub",
+    "title": "EventHub: Razorpay signature verification",
+    "terms": "payment razorpay order signature hmac sha256 verification paid token",
+    "text": "The Razorpay verification route computes HMAC-SHA256 over razorpay_order_id + \"|\" + razorpay_payment_id using the server secret, compares it with razorpay_signature and rejects a mismatch. On success it generates a QR token and marks the ticket paid, with an in-memory update fallback if the database fails. Signature checking is not a guarantee that every payment/provider integration is production-ready.",
+    "file": "app/api/razorpay/verify/route.ts",
+    "startLine": 15,
+    "endLine": 57,
+    "anchors": [
+      "razorpay_order_id +",
+      "createHmac('sha256'",
+      "expectedSignature !== razorpay_signature",
+      "status: 'paid'"
+    ],
+    "revision": "28effad60921092b6f104b62e5eb99509f6aa051",
+    "repository": "shivam2931120/EventHub"
+  },
+  {
+    "id": "eventhub-evidence-checkin",
+    "project": "eventhub",
+    "title": "EventHub: check-in and duplicate race limitation",
+    "terms": "qr scanner duplicates concurrent atomic transaction checkin undo lookup write",
+    "text": "The check-in POST looks up a ticket by ID or token and then updates checkedIn/checkedInAt in a separate Prisma operation; action=undo reverses it. On database failure it checks the process-memory ticket store. This lookup-then-write code is not atomic duplicate-scan prevention under concurrency, and memory fallback is temporary rather than durable PostgreSQL storage.",
+    "file": "app/api/checkin/route.ts",
+    "startLine": 26,
+    "endLine": 70,
+    "anchors": [
+      "prisma.ticket.findFirst",
+      "prisma.ticket.update",
+      "action === 'undo'",
+      "ticketStorage.findByToken"
+    ],
+    "revision": "28effad60921092b6f104b62e5eb99509f6aa051",
+    "repository": "shivam2931120/EventHub"
+  },
+  {
+    "id": "eventhub-evidence-phonepe",
+    "project": "eventhub",
+    "title": "EventHub: PhonePe creation is mocked",
+    "terms": "phonepe provider mock payment integration status real",
+    "text": "The PhonePe createPayment helper returns a mock payment URL in this source snapshot. Do not describe PhonePe creation as a verified real gateway integration. The actual Razorpay verification path is separate and must be described separately.",
+    "file": "lib/phonepe.ts",
+    "startLine": 49,
+    "endLine": 55,
+    "anchors": [
+      "mock"
+    ],
+    "revision": "28effad60921092b6f104b62e5eb99509f6aa051",
+    "repository": "shivam2931120/EventHub"
+  },
+  {
+    "id": "editorial-evidence-persistence",
+    "project": "editorial",
+    "title": "Editorial: Yjs persistence and update size",
+    "terms": "collaboration crdt sync conflict merge yjs state persistence reload devices debounce 350 size",
+    "text": "Yjs documents are cached per document ID and initialized from Base64 state in Supabase document_collaboration_states. Non-database updates debounce persistence by 350 ms. Persistence encodes the full Yjs state and upserts it. Incoming updates are decoded, rejected if empty or above 2,000,000 bytes, and applied with Y.applyUpdate. This supports shared CRDT state, not a claim of instantaneous durable writes.",
+    "file": "backend/src/utils/yjsCollaboration.ts",
+    "startLine": 18,
+    "endLine": 80,
+    "anchors": [
+      "document_collaboration_states",
+      "}, 350)",
+      "update.length > 2_000_000",
+      "Y.applyUpdate(cached.doc"
+    ],
+    "revision": "a1a8b8c6982e75822840abf530965d8cc0b38a11",
+    "repository": "shivam2931120/realtime_collab"
+  },
+  {
+    "id": "editorial-evidence-permissions",
+    "project": "editorial",
+    "title": "Editorial: collaboration permissions and fallback",
+    "terms": "viewer commenter edit permission socket join sync yjs realtime authentication access deny",
+    "text": "Socket collaboration authenticates users, checks document access for sync and permits updates only to roles other than viewer/commenter. yjs-sync-request returns the persisted/shared state through getCollaborationState; yjs-update applies and broadcasts updates to the room. If Yjs sync is unavailable, yjs-unavailable allows an older full-document transport. The source does not promise offline synchronization for every failure.",
+    "file": "backend/src/sockets/index.ts",
+    "startLine": 173,
+    "endLine": 212,
+    "anchors": [
+      "yjs-sync-request",
+      "role === \"viewer\" || role === \"commenter\"",
+      "socket.to(payload.documentId).emit",
+      "yjs-unavailable"
+    ],
+    "revision": "a1a8b8c6982e75822840abf530965d8cc0b38a11",
+    "repository": "shivam2931120/realtime_collab"
+  },
+  {
+    "id": "editorial-evidence-rename",
+    "project": "editorial",
+    "title": "Editorial: rename without losing local edits",
+    "terms": "document rename title local unsaved edit active doc store upsert",
+    "text": "renameDocument trims and rejects an empty title, PUTs the new title to /docs/{id}, then merges the returned title/updatedAt into the current active/local document before upserting it. This avoids replacing a newer locally edited document body with an older rename response.",
+    "file": "frontend/src/services/renameDocument.ts",
+    "startLine": 3,
+    "endLine": 14,
+    "anchors": [
+      "const title = name.trim()",
+      "api.put",
+      "state.activeDoc",
+      "state.upsertDoc"
+    ],
+    "revision": "a1a8b8c6982e75822840abf530965d8cc0b38a11",
+    "repository": "shivam2931120/realtime_collab"
+  },
+  {
+    "id": "unix-evidence-metrics",
+    "project": "unix",
+    "title": "UNIX scheduler: waiting/turnaround metrics",
+    "terms": "cpu scheduler algorithms FCFS SJF Priority Round Robin RR waiting turnaround completion formula",
+    "text": "The C scheduler calculates turnaround = completion - arrival, and waiting = turnaround - burst. It implements FCFS, SJF, Priority and Round Robin (RR), with arrival-aware scheduling and Gantt/metric output for the Zenity UI. These are educational scheduling simulations, not changes to the host kernel scheduler.",
+    "file": "sched_sim.c",
+    "startLine": 40,
+    "endLine": 148,
+    "anchors": [
+      "process->turnaround = process->completion - process->arrival",
+      "process->waiting = process->turnaround - process->burst",
+      "ROUND ROBIN"
+    ],
+    "revision": "3fb4edf5f6eb26a81019b2b194ec673bd33d767a",
+    "repository": "shivam2931120/unix_mini_project"
+  },
+  {
+    "id": "unix-evidence-network",
+    "project": "unix",
+    "title": "UNIX toolkit: network throughput sampling",
+    "terms": "linux utility suite interface network throughput RX TX bytes counters monitor",
+    "text": "The Bash network monitor finds a default network interface, reads RX/TX byte counters from sysfs, and reports interval receive/transmit throughput. It samples rx_bytes and tx_bytes for the selected interface, rather than packet inspection or a remote analytics backend. It requires the host Linux tools and a desktop/terminal environment.",
+    "file": "unix.sh",
+    "startLine": 272,
+    "endLine": 291,
+    "anchors": [
+      "rx_bytes",
+      "tx_bytes",
+      "sleep 1"
+    ],
+    "revision": "3fb4edf5f6eb26a81019b2b194ec673bd33d767a",
+    "repository": "shivam2931120/unix_mini_project"
+  },
+  {
+    "id": "unix-evidence-process",
+    "project": "unix",
+    "title": "UNIX toolkit: process termination checks",
+    "terms": "process manager kill terminate PID confirmation SIGTERM ps validation",
+    "text": "The C process manager lists processes, validates the chosen PID, requests a Zenity confirmation and then sends SIGTERM with kill(). It does not use a default SIGKILL and does not terminate a process merely because the visitor opens the portfolio demo. Actual permissions and process state determine whether the local operation succeeds.",
+    "file": "proc_manager.c",
+    "startLine": 174,
+    "endLine": 245,
+    "anchors": [
+      "SIGTERM",
+      "kill(",
+      "--question"
+    ],
+    "revision": "3fb4edf5f6eb26a81019b2b194ec673bd33d767a",
+    "repository": "shivam2931120/unix_mini_project"
+  }
+]

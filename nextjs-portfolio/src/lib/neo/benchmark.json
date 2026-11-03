@@ -1,0 +1,596 @@
+[
+  {
+    "id": "overview-market",
+    "question": "Explain Cross-Market Disclosure Analysis",
+    "projects": [
+      "market"
+    ],
+    "facts": [
+      "FastAPI",
+      "pgvector"
+    ]
+  },
+  {
+    "id": "overview-detection",
+    "question": "Explain the Hybrid CNN Transformer detector",
+    "projects": [
+      "detection"
+    ],
+    "facts": [
+      "ResNet18",
+      "Transformer"
+    ]
+  },
+  {
+    "id": "overview-nexus",
+    "question": "Explain Nexus",
+    "projects": [
+      "nexus"
+    ],
+    "facts": [
+      "Spring",
+      "PostgreSQL"
+    ]
+  },
+  {
+    "id": "overview-bb84",
+    "question": "Explain BB84 Quantum Messenger",
+    "projects": [
+      "bb84"
+    ],
+    "facts": [
+      "Flask",
+      "Socket.IO"
+    ]
+  },
+  {
+    "id": "overview-securevault",
+    "question": "Explain SecureVault",
+    "projects": [
+      "securevault"
+    ],
+    "facts": [
+      "AES",
+      "PBKDF2"
+    ]
+  },
+  {
+    "id": "overview-movie",
+    "question": "Explain TheMovie",
+    "projects": [
+      "movie"
+    ],
+    "facts": [
+      "Next.js",
+      "TMDB"
+    ]
+  },
+  {
+    "id": "overview-neo",
+    "question": "Explain Neo the desktop voice assistant",
+    "projects": [
+      "neo"
+    ],
+    "facts": [
+      "Python",
+      "speech|microphone"
+    ]
+  },
+  {
+    "id": "overview-sms",
+    "question": "Explain Shikshan",
+    "projects": [
+      "sms"
+    ],
+    "facts": [
+      "Flask",
+      "SQLAlchemy"
+    ]
+  },
+  {
+    "id": "overview-attendify",
+    "question": "Explain Attendify",
+    "projects": [
+      "attendify"
+    ],
+    "facts": [
+      "Express",
+      "Clerk"
+    ]
+  },
+  {
+    "id": "overview-eventhub",
+    "question": "Explain EventHub",
+    "projects": [
+      "eventhub"
+    ],
+    "facts": [
+      "Prisma",
+      "Razorpay"
+    ]
+  },
+  {
+    "id": "overview-editorial",
+    "question": "Explain Editorial",
+    "projects": [
+      "editorial"
+    ],
+    "facts": [
+      "Yjs",
+      "Tiptap"
+    ]
+  },
+  {
+    "id": "overview-unix",
+    "question": "Explain UNIX Utility Toolkit",
+    "projects": [
+      "unix"
+    ],
+    "facts": [
+      "Bash",
+      "Zenity"
+    ]
+  },
+  {
+    "id": "detail-market",
+    "question": "What macro F1 results did your disclosure benchmark report?",
+    "projects": [
+      "market"
+    ],
+    "facts": [
+      "0.7167|0.717",
+      "0.6534|0.653",
+      "AI.adjudicated|not independently"
+    ]
+  },
+  {
+    "id": "detail-detection",
+    "question": "What is the uncertainty gate formula in the KITTI detector?",
+    "projects": [
+      "detection"
+    ],
+    "facts": [
+      "0.5",
+      "sigma|0.12",
+      "exp"
+    ]
+  },
+  {
+    "id": "detail-nexus",
+    "question": "How does Nexus authorize STOMP SEND and SUBSCRIBE messages?",
+    "projects": [
+      "nexus"
+    ],
+    "facts": [
+      "CONNECT",
+      "SUBSCRIBE",
+      "membership|memberships",
+      "private|PRIVATE"
+    ]
+  },
+  {
+    "id": "detail-bb84",
+    "question": "How does the BB84 message payload expose plaintext and the key?",
+    "projects": [
+      "bb84"
+    ],
+    "facts": [
+      "XOR",
+      "plaintext",
+      "key"
+    ]
+  },
+  {
+    "id": "detail-securevault",
+    "question": "Does SecureVault persist the master key across reloads and what is its demo bypass?",
+    "projects": [
+      "securevault"
+    ],
+    "facts": [
+      "partialize|not persist",
+      "demo",
+      "verifier"
+    ]
+  },
+  {
+    "id": "detail-movie",
+    "question": "What NDCG and recall did TheMovie report, and did normalization improve it?",
+    "projects": [
+      "movie"
+    ],
+    "facts": [
+      "0.09228",
+      "0.04106",
+      "30",
+      "raw"
+    ]
+  },
+  {
+    "id": "detail-neo",
+    "question": "Is desktop Neo an LLM or a voice command dispatcher, and which recognition service does it call?",
+    "projects": [
+      "neo"
+    ],
+    "facts": [
+      "recognize_google|Google",
+      "pyttsx3",
+      "phrase|if/elif"
+    ]
+  },
+  {
+    "id": "detail-sms",
+    "question": "How does Shikshan avoid creating attendance twice for a student on the same date?",
+    "projects": [
+      "sms"
+    ],
+    "facts": [
+      "student_id",
+      "date",
+      "existing|update"
+    ]
+  },
+  {
+    "id": "detail-attendify",
+    "question": "How does Attendify merge holiday edits from different devices?",
+    "projects": [
+      "attendify"
+    ],
+    "facts": [
+      "holidayDates",
+      "cancelledDates",
+      "date.keyed|date keyed"
+    ]
+  },
+  {
+    "id": "detail-eventhub",
+    "question": "How is the Razorpay order and payment signature checked in EventHub?",
+    "projects": [
+      "eventhub"
+    ],
+    "facts": [
+      "HMAC",
+      "sha256|SHA.256",
+      "order_id|order ID",
+      "payment_id|payment ID"
+    ]
+  },
+  {
+    "id": "detail-editorial",
+    "question": "How does Editorial persist Yjs state and bound incoming updates?",
+    "projects": [
+      "editorial"
+    ],
+    "facts": [
+      "350",
+      "2,000,000|2000000|2_000_000",
+      "document_collaboration_states"
+    ]
+  },
+  {
+    "id": "detail-unix",
+    "question": "How does the UNIX scheduler calculate waiting and turnaround time?",
+    "projects": [
+      "unix"
+    ],
+    "facts": [
+      "completion.*arrival",
+      "turnaround.*burst",
+      "Round Robin|RR"
+    ]
+  },
+  {
+    "id": "vault-alias",
+    "question": "How does Secure Vault protect saved passwords?",
+    "projects": [
+      "securevault"
+    ],
+    "facts": [
+      "PBKDF2",
+      "AES"
+    ]
+  },
+  {
+    "id": "movie-alias",
+    "question": "How does the movie app personalize recommendations?",
+    "projects": [
+      "movie"
+    ],
+    "facts": [
+      "rank|graph",
+      "offline"
+    ]
+  },
+  {
+    "id": "erp-alias",
+    "question": "What storage does the college ERP use?",
+    "projects": [
+      "sms"
+    ],
+    "facts": [
+      "SQLAlchemy",
+      "PostgreSQL|SQLite"
+    ]
+  },
+  {
+    "id": "qkd-alias",
+    "question": "Does your quantum messenger really perform quantum key distribution?",
+    "projects": [
+      "bb84"
+    ],
+    "facts": [
+      "XOR",
+      "not.*quantum|does not implement"
+    ]
+  },
+  {
+    "id": "linux-alias",
+    "question": "Can the Linux utility suite show interface throughput?",
+    "projects": [
+      "unix"
+    ],
+    "facts": [
+      "RX|rx_bytes",
+      "TX|tx_bytes"
+    ]
+  },
+  {
+    "id": "vision-alias",
+    "question": "How does your object detection model handle uncertain boxes?",
+    "projects": [
+      "detection"
+    ],
+    "facts": [
+      "refin",
+      "0.5"
+    ]
+  },
+  {
+    "id": "editor-alias",
+    "question": "How does your collaborative document editor merge edits?",
+    "projects": [
+      "editorial"
+    ],
+    "facts": [
+      "Yjs",
+      "Socket.IO"
+    ]
+  },
+  {
+    "id": "attendance-alias",
+    "question": "Does the attendance tracker save records in a React database?",
+    "projects": [
+      "attendify"
+    ],
+    "facts": [
+      "Clerk",
+      "metadata"
+    ]
+  },
+  {
+    "id": "follow-vault",
+    "question": "And what happens after refreshing the page?",
+    "projects": [
+      "securevault"
+    ],
+    "facts": [
+      "masterKey|master key",
+      "rehydrat|derive"
+    ],
+    "history": [
+      {
+        "role": "user",
+        "content": "Explain SecureVault"
+      },
+      {
+        "role": "user",
+        "content": "How does it unlock?"
+      }
+    ]
+  },
+  {
+    "id": "follow-movie",
+    "question": "Does it retrain whenever I watch something?",
+    "projects": [
+      "movie"
+    ],
+    "facts": [
+      "offline",
+      "does not retrain|not retrain"
+    ],
+    "history": [
+      {
+        "role": "user",
+        "content": "Explain TheMovie"
+      },
+      {
+        "role": "user",
+        "content": "How does it personalize?"
+      }
+    ]
+  },
+  {
+    "id": "follow-nexus",
+    "question": "And who can subscribe to it?",
+    "projects": [
+      "nexus"
+    ],
+    "facts": [
+      "membership|memberships",
+      "SUBSCRIBE|subscribe"
+    ],
+    "history": [
+      {
+        "role": "user",
+        "content": "Explain Nexus"
+      },
+      {
+        "role": "user",
+        "content": "How does its websocket connect?"
+      }
+    ]
+  },
+  {
+    "id": "follow-editorial",
+    "question": "What if I open it on another device?",
+    "projects": [
+      "editorial"
+    ],
+    "facts": [
+      "Yjs",
+      "persist|state"
+    ],
+    "history": [
+      {
+        "role": "user",
+        "content": "Explain Editorial"
+      },
+      {
+        "role": "user",
+        "content": "How are edits persisted?"
+      }
+    ]
+  },
+  {
+    "id": "follow-switch",
+    "question": "And how does it store attendance?",
+    "projects": [
+      "attendify"
+    ],
+    "facts": [
+      "metadata"
+    ],
+    "history": [
+      {
+        "role": "user",
+        "content": "Explain SecureVault"
+      },
+      {
+        "role": "user",
+        "content": "Now explain Attendify"
+      }
+    ]
+  },
+  {
+    "id": "follow-compare",
+    "question": "How does that compare to Editorial?",
+    "projects": [
+      "nexus",
+      "editorial"
+    ],
+    "facts": [
+      "Yjs",
+      "Spring"
+    ],
+    "history": [
+      {
+        "role": "user",
+        "content": "Explain Nexus"
+      },
+      {
+        "role": "user",
+        "content": "How does it handle documents?"
+      }
+    ]
+  },
+  {
+    "id": "unknown-personal",
+    "question": "What was Shivam's exact GPA?",
+    "projects": [],
+    "facts": [],
+    "abstain": true
+  },
+  {
+    "id": "unknown-metrics",
+    "question": "What is the detector's proven production mAP score?",
+    "projects": [
+      "detection"
+    ],
+    "facts": [
+      "not.*(report|document|verified)|no.*(result|score|benchmark)|does not.*(report|establish)"
+    ]
+  },
+  {
+    "id": "unknown-rationale",
+    "question": "Why did Shivam personally choose Java instead of Go for Nexus?",
+    "projects": [
+      "nexus"
+    ],
+    "facts": [
+      "not documented|not recorded|does not.*(record|document)|no.*rationale"
+    ]
+  },
+  {
+    "id": "unknown-general",
+    "question": "What is the population of Neptune?",
+    "projects": [],
+    "facts": [],
+    "abstain": true
+  },
+  {
+    "id": "ambiguous-neo",
+    "question": "Tell me about Neo",
+    "projects": [],
+    "facts": [],
+    "abstain": true
+  },
+  {
+    "id": "compare-crypto",
+    "question": "Compare BB84 and SecureVault encryption",
+    "projects": [
+      "bb84",
+      "securevault"
+    ],
+    "facts": [
+      "XOR",
+      "AES"
+    ]
+  },
+  {
+    "id": "compare-docs",
+    "question": "Compare Nexus and Editorial collaboration",
+    "projects": [
+      "nexus",
+      "editorial"
+    ],
+    "facts": [
+      "Spring",
+      "Yjs"
+    ]
+  },
+  {
+    "id": "compare-attendance",
+    "question": "Compare Attendify and Shikshan attendance storage",
+    "projects": [
+      "attendify",
+      "sms"
+    ],
+    "facts": [
+      "metadata",
+      "SQLAlchemy"
+    ]
+  },
+  {
+    "id": "compare-ai",
+    "question": "Compare the disclosure project and the KITTI detector",
+    "projects": [
+      "market",
+      "detection"
+    ],
+    "facts": [
+      "Gemini",
+      "PyTorch|ResNet18"
+    ]
+  },
+  {
+    "id": "compare-realtime",
+    "question": "Compare BB84 and Editorial realtime transport",
+    "projects": [
+      "bb84",
+      "editorial"
+    ],
+    "facts": [
+      "Socket.IO",
+      "Yjs"
+    ]
+  }
+]

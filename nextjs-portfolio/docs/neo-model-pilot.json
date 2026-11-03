@@ -1,0 +1,74 @@
+{
+  "evaluatedAt": "2026-11-03T04:32:29.360Z",
+  "scope": "Small qualitative pilot: two fixed questions per model, not a general benchmark or a training run",
+  "results": [
+    {
+      "model": "qwen/qwen3.8-27b",
+      "id": "movie-results",
+      "question": "What NDCG and recall did TheMovie report, and did normalization improve it?",
+      "status": 200,
+      "elapsedMs": 620,
+      "answer": "TheMovie reported a test NDCG@20 of 0.09228 and Recall@20 of 0.04106 for the raw SVD baseline [S1]. Centered and scaled normalization did not improve these metrics; the raw approach remained the best-performing option [S1].\n\nThese figures come from a corrected temporal evaluation involving only 14 validation and 30 test users [S1]. Because the cohort is small, these results reflect specific returning-user performance rather than general production readiness [S1]. The shipped artifacts and RATING_NORMALIZATION setting stayed raw, confirming that normalization was not adopted for the final implementation [S1].",
+      "finishReason": "stop",
+      "usage": {
+        "queue_time": 0.048926526,
+        "prompt_tokens": 560,
+        "prompt_time": 0.040884833,
+        "completion_tokens": 142,
+        "completion_time": 0.282110616,
+        "total_tokens": 702,
+        "total_time": 0.322995449
+      },
+      "sources": [
+        {
+          "id": "movie-evidence-metrics",
+          "title": "TheMovie: measured recommendation results · ml/README.md:55–66",
+          "url": "https://github.com/shivam2931120/TheMovie/blob/d2240c74229c2cc5194614ac65508cc9289748a2/ml/README.md#L55-L66",
+          "revision": "d2240c7"
+        }
+      ]
+    },
+    {
+      "model": "qwen/qwen3.8-27b",
+      "id": "vault-unlock",
+      "question": "Does SecureVault persist the master key across refreshes and is there a demo bypass?",
+      "status": 200,
+      "elapsedMs": 372,
+      "answer": "No, SecureVault does not persist the master key across refreshes. The auth store persists user, salt, keyVerifier, and isAuthenticated in localStorage, but explicitly excludes masterKey. Upon refresh, the application derives a new candidate key and validates it against the encrypted verifier.\n\nYes, a demo bypass exists. The reviewed code includes a specific demo password bypass and initializes a local-vault user with isAuthenticated set to true. These are demo-specific behaviors, not production authentication guarantees.\n\n[S1]",
+      "finishReason": "stop",
+      "usage": {
+        "queue_time": 0.062256919,
+        "prompt_tokens": 623,
+        "prompt_time": 0.047487969,
+        "completion_tokens": 100,
+        "completion_time": 0.200207123,
+        "total_tokens": 723,
+        "total_time": 0.247695092
+      },
+      "sources": [
+        {
+          "id": "securevault-evidence-unlock",
+          "title": "SecureVault: reload, lock and demo bypass · stores/authStore.ts:17–90",
+          "url": "https://github.com/shivam2931120/SecureVault/blob/02dad3de8389b1d38003b0ad3bf0a90ccaa006bb/stores/authStore.ts#L17-L90",
+          "revision": "02dad3d"
+        },
+        {
+          "id": "securevault-evidence-register",
+          "title": "SecureVault: registration verifier · app/api/auth/register/route.ts:2–48",
+          "url": "https://github.com/shivam2931120/SecureVault/blob/02dad3de8389b1d38003b0ad3bf0a90ccaa006bb/app/api/auth/register/route.ts#L2-L48",
+          "revision": "02dad3d"
+        }
+      ]
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "id": "movie-results",
+      "skipped": "Shared quota guard declined evaluation"
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "id": "vault-unlock",
+      "skipped": "Shared quota guard declined evaluation"
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "evaluatedAt": "2026-11-03T04:41:12.770Z",
+  "metric": "Deterministic retrieval evidence coverage, NOT an LLM accuracy score",
+  "questions": 48,
+  "passed": 47,
+  "scopePass": 48,
+  "factsCovered": 101,
+  "factsTotal": 102,
+  "results": [
+    {
+      "id": "overview-market",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "market"
+      ]
+    },
+    {
+      "id": "overview-detection",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "detection"
+      ]
+    },
+    {
+      "id": "overview-nexus",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "nexus"
+      ]
+    },
+    {
+      "id": "overview-bb84",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "bb84"
+      ]
+    },
+    {
+      "id": "overview-securevault",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "securevault"
+      ]
+    },
+    {
+      "id": "overview-movie",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "movie"
+      ]
+    },
+    {
+      "id": "overview-neo",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "neo"
+      ]
+    },
+    {
+      "id": "overview-sms",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "sms"
+      ]
+    },
+    {
+      "id": "overview-attendify",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "attendify"
+      ]
+    },
+    {
+      "id": "overview-eventhub",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "eventhub"
+      ]
+    },
+    {
+      "id": "overview-editorial",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "editorial"
+      ]
+    },
+    {
+      "id": "overview-unix",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "unix"
+      ]
+    },
+    {
+      "id": "detail-market",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "market"
+      ]
+    },
+    {
+      "id": "detail-detection",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "detection"
+      ]
+    },
+    {
+      "id": "detail-nexus",
+      "scope": true,
+      "facts": 4,
+      "totalFacts": 4,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "nexus"
+      ]
+    },
+    {
+      "id": "detail-bb84",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "bb84"
+      ]
+    },
+    {
+      "id": "detail-securevault",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "securevault"
+      ]
+    },
+    {
+      "id": "detail-movie",
+      "scope": true,
+      "facts": 4,
+      "totalFacts": 4,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "movie"
+      ]
+    },
+    {
+      "id": "detail-neo",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "neo"
+      ]
+    },
+    {
+      "id": "detail-sms",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "sms"
+      ]
+    },
+    {
+      "id": "detail-attendify",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "attendify"
+      ]
+    },
+    {
+      "id": "detail-eventhub",
+      "scope": true,
+      "facts": 4,
+      "totalFacts": 4,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "eventhub"
+      ]
+    },
+    {
+      "id": "detail-editorial",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "editorial"
+      ]
+    },
+    {
+      "id": "detail-unix",
+      "scope": true,
+      "facts": 3,
+      "totalFacts": 3,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "unix"
+      ]
+    },
+    {
+      "id": "vault-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "securevault"
+      ]
+    },
+    {
+      "id": "movie-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "movie"
+      ]
+    },
+    {
+      "id": "erp-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "sms"
+      ]
+    },
+    {
+      "id": "qkd-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "bb84"
+      ]
+    },
+    {
+      "id": "linux-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "unix"
+      ]
+    },
+    {
+      "id": "vision-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "detection"
+      ]
+    },
+    {
+      "id": "editor-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "editorial"
+      ]
+    },
+    {
+      "id": "attendance-alias",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "attendify"
+      ]
+    },
+    {
+      "id": "follow-vault",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "securevault"
+      ]
+    },
+    {
+      "id": "follow-movie",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "movie"
+      ]
+    },
+    {
+      "id": "follow-nexus",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "nexus"
+      ]
+    },
+    {
+      "id": "follow-editorial",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "editorial"
+      ]
+    },
+    {
+      "id": "follow-switch",
+      "scope": true,
+      "facts": 1,
+      "totalFacts": 1,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "attendify"
+      ]
+    },
+    {
+      "id": "follow-compare",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "nexus",
+        "editorial"
+      ]
+    },
+    {
+      "id": "unknown-personal",
+      "scope": true,
+      "facts": 0,
+      "totalFacts": 0,
+      "abstained": true,
+      "pass": true,
+      "projects": []
+    },
+    {
+      "id": "unknown-metrics",
+      "scope": true,
+      "facts": 1,
+      "totalFacts": 1,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "detection"
+      ]
+    },
+    {
+      "id": "unknown-rationale",
+      "scope": true,
+      "facts": 0,
+      "totalFacts": 1,
+      "abstained": true,
+      "pass": false,
+      "projects": [
+        "nexus"
+      ]
+    },
+    {
+      "id": "unknown-general",
+      "scope": true,
+      "facts": 0,
+      "totalFacts": 0,
+      "abstained": true,
+      "pass": true,
+      "projects": []
+    },
+    {
+      "id": "ambiguous-neo",
+      "scope": true,
+      "facts": 0,
+      "totalFacts": 0,
+      "abstained": true,
+      "pass": true,
+      "projects": []
+    },
+    {
+      "id": "compare-crypto",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "bb84",
+        "securevault"
+      ]
+    },
+    {
+      "id": "compare-docs",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "nexus",
+        "editorial"
+      ]
+    },
+    {
+      "id": "compare-attendance",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "sms",
+        "attendify"
+      ]
+    },
+    {
+      "id": "compare-ai",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "market",
+        "detection"
+      ]
+    },
+    {
+      "id": "compare-realtime",
+      "scope": true,
+      "facts": 2,
+      "totalFacts": 2,
+      "abstained": true,
+      "pass": true,
+      "projects": [
+        "bb84",
+        "editorial"
+      ]
+    }
+  ]
+}

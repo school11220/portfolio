@@ -110,12 +110,12 @@ test("provider stream is decoded across chunk boundaries", async () => {
     delete process.env.UPSTASH_REDIS_REST_URL; delete process.env.UPSTASH_REDIS_REST_TOKEN;
     globalThis.fetch = async () => new Response(new ReadableStream({ start(c) {
       const encoder = new TextEncoder();
-      for (const piece of ['data: {"choices":[{"delta":{"con', 'tent":"AES-GCM "}}]}\n\ndata: {"choices":[{"delta":{"content":"in the browser."}}]}\n\n', 'data: [DONE]\n\n']) c.enqueue(encoder.encode(piece));
+      for (const piece of ['data: {"choices":[{"delta":{"con', 'tent":"AES-GCM "}}]}\n\ndata: {"choices":[{"delta":{"content":"in the browser. [S1]"}}]}\n\n', 'data: [DONE]\n\n']) c.enqueue(encoder.encode(piece));
       c.close();
     } }));
     const response = await POST(new Request("http://localhost/api/chat", { method: "POST", body: JSON.stringify({ messages: [{ role: "user", content: "How does SecureVault encrypt data?" }] }) }));
     const events = (await response.text()).trim().split("\n").map((s) => JSON.parse(s));
-    assert.equal(events[0].mode, "ai"); assert.equal(events.filter((e) => e.type === "delta").map((e) => e.text).join(""), "AES-GCM in the browser."); assert.equal(events.at(-1).type, "done");
+    assert.equal(events[0].mode, "ai"); assert.equal(events.filter((e) => e.type === "delta").map((e) => e.text).join(""), "AES-GCM in the browser. [S1]"); assert.equal(events.at(-1).type, "done");
   } finally { process.env = env; globalThis.fetch = original; }
 });
 

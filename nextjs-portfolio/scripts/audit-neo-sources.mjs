@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 const audit = JSON.parse(await readFile(new URL('../src/lib/neo-source-audit.json', import.meta.url), 'utf8'));
+const evidence = JSON.parse(await readFile(new URL('../src/lib/neo/evidence.json', import.meta.url), 'utf8'));
 const dir = await mkdtemp(join(tmpdir(), 'neo-audit-'));
 let failed = 0;
 try {
@@ -15,6 +16,13 @@ try {
     for (const file of Object.keys(review.files)) {
       try { execFileSync('git', ['-C', repo, 'cat-file', '-e', `${review.revision}:${file}`], { stdio: 'ignore' }); }
       catch { failed++; console.error(`Missing: ${key}/${file}`); }
+    }
+    for (const record of evidence.filter(item => item.project === key)) {
+      const text = execFileSync('git', ['-C', repo, 'show', `${record.revision}:${record.file}`], { encoding: 'utf8' });
+      const excerpt = text.split(/\r?\n/).slice(record.startLine - 1, record.endLine).join('\n');
+      if (record.revision !== review.revision || record.anchors.some(anchor => !excerpt.includes(anchor))) {
+        failed++; console.error(`Evidence anchor drift: ${record.id}`);
+      }
     }
     console.log(`Checked ${key}: ${review.revision.slice(0, 7)}`);
   }

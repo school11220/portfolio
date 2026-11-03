@@ -1,100 +1,110 @@
-import { personalInfo, projects, skills } from "./data";
-import { architectures, architectureKeyByProject, architectureReviews, architectureSources } from "./architectureData";
-import type { ChatProject, ChatSource, ChatTurn } from "./neo-types";
-
-type Document = { id: string; project?: string; title: string; text: string; source: ChatSource; terms: string };
-const aliases: Record<string, string> = {
-  market: "financial finance disclosure rag retrieval sentiment risk india us ai ml",
-  detection: "vision machine learning ml ai cnn transformer kitti detector autonomous",
-  nexus: "workspace team chat collaboration spring java organization auth authentication ai retrieval",
-  bb84: "quantum messenger qkd bb84 alice bob eve eavesdrop encryption socket chat security",
-  securevault: "securevault secure vault password encryption crypto aes pbkdf2 security backup",
-  movie: "themovie movie movies film tv recommendation recommender watch diary ai ml",
-  neo: "desktop voice assistant speech windows microphone python",
-  sms: "shikshan college school erp sms attendance teacher student library fees",
-  attendify: "attendify attendance clerk timetable calendar subjects",
-  eventhub: "eventhub events ticket qr razorpay payment checkin check-in",
-  editorial: "editorial editor document documents collaboration yjs tiptap realtime socket ai writing",
-  unix: "unix linux utility utilities toolkit os system network process scheduling scheduler bash c zenity",
+import { personalInfo, projects, skills } from './data';
+import { architectures, architectureKeyByProject, architectureReviews, architectureSources } from './architectureData';
+import evidence from './neo/evidence.json';
+import { conversationTopic, mentionedProjects, projectAliases, tokens, topicTags } from './neo/language';
+import { rankDocuments } from './neo/retrieval';
+import type { ChatContext, ChatProject, ChatSource, ChatTurn } from './neo-types';
+export type KnowledgeDocument = {
+    id: string;
+    project?: string;
+    title: string;
+    text: string;
+    source: ChatSource;
+    terms: string;
+    kind: 'profile' | 'overview' | 'component' | 'evidence';
 };
-const stop = new Set("a an and are as at be by can could do does for from have how i in is it its me my of on or please project projects show tell than that the their them these they this to use uses using was what when where which who why will with work works would you your built build about more explain compare comparison details detail".split(" "));
-function tokens(text: string) {
-  return text.toLowerCase().replace(/real-time/g, "realtime").replace(/[^a-z0-9+#.-]/g, " ").split(/\s+/).filter((word) => word.length > 1 && !stop.has(word)).map((word) => {
-    if (/^(encrypt|decrypt|cryptograph)/.test(word)) return "crypto";
-    if (/^(authenticat|authorization)/.test(word)) return "auth";
-    if (/^recommend/.test(word)) return "recommend";
-    return word.length > 4 && word.endsWith("s") ? word.slice(0, -1) : word;
-  });
+const profile: KnowledgeDocument = { id: 'profile', title: 'Shivam — profile and contact', kind: 'profile', terms: 'profile skills stack resume cv contact hire email linkedin github developer', text: `Shivam is a full-stack developer based in India and available for select work. Listed skills: ${skills.map(s => s.name).join(', ')}. Public contact: ${personalInfo.email}. LinkedIn: ${personalInfo.linkedin}. GitHub: ${personalInfo.github}. Resume: ${personalInfo.resume}. These sources do not document GPA, degree, exact employment history, salary, phone number or start dates. The portfolio assistant Neo is separate from the desktop Python voice-assistant project.`, source: { id: 'profile', title: 'Portfolio profile', url: 'https://justshivamm.in/#about' } };
+export const knowledge: KnowledgeDocument[] = [profile, ...projects.flatMap(project => {
+        const key = architectureKeyByProject[project.title as keyof typeof architectureKeyByProject];
+        const arch = architectures[key];
+        const review = architectureReviews[key];
+        const overview: KnowledgeDocument = { id: `${key}-overview`, project: key, title: project.title, kind: 'overview', terms: `${projectAliases[key].join(' ')} ${topicTags[key]} ${project.techStack.join(' ')}`, text: `${project.description} ${arch.summary} Stack: ${project.techStack.join(', ')}. ${project.link ? `Listed app URL: ${project.link}.` : 'No live app URL is listed.'} ${review.workingTree ? 'Some prior architecture notes include local working changes; only code evidence records are pinned implementation evidence.' : ''}`, source: { id: `${key}-overview`, title: `${project.title} · reviewed overview`, url: `https://github.com/${review.repository}/tree/${review.revision}`, revision: review.revision } };
+        return [overview, ...arch.nodes.map((node): KnowledgeDocument => ({ id: `${key}-${node.id}`, project: key, title: `${project.title}: ${node.title}`, kind: 'component', terms: `${node.title} ${node.subtitle}`, text: node.detail, source: { id: `${key}-${node.id}`, title: `${project.title} · ${architectureSources[key][node.id]}`, url: `https://github.com/${review.repository}/blob/${review.revision}/${architectureSources[key][node.id].split('/').map(encodeURIComponent).join('/')}`, revision: review.revision } }))];
+    }), ...evidence.map((e): KnowledgeDocument => ({ id: e.id, project: e.project, title: e.title, kind: 'evidence', terms: e.terms, text: e.text, source: { id: e.id, title: `${e.title} · ${e.file}:${e.startLine}–${e.endLine}`, url: `https://github.com/${e.repository}/blob/${e.revision}/${e.file.split('/').map(encodeURIComponent).join('/')}#L${e.startLine}-L${e.endLine}`, revision: e.revision.slice(0, 7) } }))];
+export function retrieve(question: string, history: ChatTurn[], hint?: ChatContext) {
+    const topic = conversationTopic(question, history, hint);
+    if (topic.needsClarification)
+        return { documents: [] as KnowledgeDocument[], sources: [] as ChatSource[], projects: [] as ChatProject[], topic };
+    const candidates = knowledge.filter(d => !topic.focus.length || (d.project && topic.focus.includes(d.project)));
+    const ranked = rankDocuments(candidates, topic.query);
+    const chosen: KnowledgeDocument[] = [];
+    const counts = new Map<string, number>();
+    const add = (doc: KnowledgeDocument) => { if (chosen.some(d => d.id === doc.id))
+        return; chosen.push(doc); counts.set(doc.project ?? 'profile', (counts.get(doc.project ?? 'profile') ?? 0) + 1); };
+    // Balance explicit comparisons before filling additional detail from one app.
+    for (const key of topic.focus.slice(0, 8)) {
+        const best = ranked.find(r => r.doc.project === key);
+        if (best)
+            add(best.doc);
+    }
+    const overviewQuestion = /^(explain|tell me about|what is|describe)\s+/i.test(question) && tokens(question).length <= 5;
+    if (!topic.focus.length) {
+        const broad = /\b(projects|apps|applications|stack|skills)\b/i.test(question);
+        if (broad)
+            for (const { doc } of ranked.filter(r => r.doc.kind === 'overview')) {
+                add(doc);
+                if (chosen.length === 6)
+                    break;
+            }
+    }
+    const maximum = topic.comparison ? 8 : 6;
+    for (const { doc } of ranked) {
+        if (chosen.length >= maximum)
+            break;
+        if ((counts.get(doc.project ?? 'profile') ?? 0) >= (topic.focus.length === 1 ? 5 : 2))
+            continue;
+        add(doc);
+    }
+    if (overviewQuestion && topic.focus.length === 1) {
+        const overview = knowledge.find(d => d.project === topic.focus[0] && d.kind === 'overview');
+        if (overview && !chosen.some(d => d.id === overview.id)) {
+            if (chosen.length >= maximum)
+                chosen.pop();
+            chosen.unshift(overview);
+        }
+    }
+    const keys = [...new Set(chosen.map(d => d.project).filter(Boolean))];
+    const related: ChatProject[] = keys.map(key => { const p = projects.find(p => architectureKeyByProject[p.title as keyof typeof architectureKeyByProject] === key)!; return { title: p.title, key: key!, description: p.description }; });
+    return { documents: chosen, sources: chosen.map(d => d.source), projects: related, topic };
 }
-
-const profile: Document = {
-  id: "profile", title: "Shivam — profile and contact", terms: "profile experience skills stack resume cv contact hire email linkedin github full stack developer",
-  text: `${personalInfo.name} is a ${personalInfo.title}, based in India, available for select work. His portfolio spans low-level systems tools, full-stack web applications, security demonstrations and machine-learning projects. Listed skills: ${skills.map((s) => s.name).join(", ")}. Contact: ${personalInfo.email}. LinkedIn: ${personalInfo.linkedin}. GitHub: ${personalInfo.github}. Resume: ${personalInfo.resume}. Detailed employment history, salary, start dates, degree and GPA are not documented in these sources. Neo the portfolio chatbot is separate from Neo the Python desktop voice assistant project.`,
-  source: { id: "profile", title: "Portfolio profile", url: "https://justshivamm.in/#about" },
-};
-
-export const knowledge: Document[] = [profile, ...projects.flatMap((project) => {
-  const key = architectureKeyByProject[project.title as keyof typeof architectureKeyByProject];
-  const architecture = architectures[key]; const review = architectureReviews[key];
-  const source = (file: string, id: string): ChatSource => ({ id, title: `${project.title} · ${file}`, url: `https://github.com/${review.repository}/blob/${review.revision}/${file.split("/").map(encodeURIComponent).join("/")}`, revision: review.revision });
-  const overview: Document = {
-    id: `${key}-overview`, project: key, title: project.title, terms: `${project.title} ${aliases[key]} ${project.techStack.join(" ")}`,
-    text: `${project.description} ${architecture.summary} Stack: ${project.techStack.join(", ")}. Workflows: ${architecture.flows.map((f) => `${f.name}: ${f.description}`).join(" ")} Important limitations: ${architecture.caveat} ${review.workingTree ? "Some architecture notes were reviewed against local working changes; do not present all those features as verified in the pinned GitHub commit." : ""} ${project.link ? `Live app: ${project.link}.` : "No live application URL is listed."}`,
-    source: { id: `${key}-overview`, title: `${project.title} · reviewed repository`, url: `https://github.com/${review.repository}/tree/${review.revision}`, revision: review.revision },
-  };
-  return [overview, ...architecture.nodes.map((node): Document => ({ id: `${key}-${node.id}`, project: key, title: `${project.title}: ${node.title}`, terms: `${project.title} ${aliases[key]} ${node.title} ${node.subtitle}`, text: node.detail, source: source(architectureSources[key][node.id], `${key}-${node.id}`) }))];
-})];
-
-export function retrieve(question: string, history: ChatTurn[]) {
-  // Resolve follow-ups using the last user topic, never instructions from assistant text.
-  const previous = history.filter((m) => m.role === "user").slice(-1)[0]?.content ?? "";
-  const mentionedProjects = (text: string) => Object.keys(aliases).filter((key) => {
-    const project = projects.find((p) => architectureKeyByProject[p.title as keyof typeof architectureKeyByProject] === key)!;
-    return text.toLowerCase().includes(project.title.toLowerCase()) || text.toLowerCase().includes(key === "market" ? "disclosure" : key === "detection" ? "detector" : key === "movie" ? "movie" : key === "unix" ? "unix" : key === "sms" ? "shikshan" : key);
-  });
-  const direct = mentionedProjects(question);
-  const isFollowUp = /\b(it|its|that|this|those|they|more|also)\b/i.test(question) && !direct.length;
-  const focus = direct.length ? direct : isFollowUp ? mentionedProjects(previous) : [];
-  const query = [...new Set(tokens(`${question} ${isFollowUp ? previous : ""}`))];
-  const ranked = knowledge.filter((doc) => !focus.length || (doc.project && focus.includes(doc.project))).map((doc) => {
-    const title = tokens(doc.title); const terms = tokens(doc.terms); const text = tokens(doc.text);
-    let score = query.reduce((sum, word) => sum + (title.includes(word) ? 6 : 0) + (terms.includes(word) ? 2 : 0) + (text.includes(word) ? 1 : 0), 0);
-    if (doc.project && direct.includes(doc.project)) score += 18;
-    if (doc.id.endsWith("overview")) score += score > 0 ? 1 : 0;
-    return { doc, score };
-  }).filter((item) => item.score > 1).sort((a, b) => b.score - a.score);
-  const chosen: Document[] = []; const perProject = new Map<string, number>();
-  const ordered = !direct.length && !isFollowUp ? [...ranked.filter(({ doc }) => doc.id.endsWith("overview") || doc.id === "profile"), ...ranked.filter(({ doc }) => !doc.id.endsWith("overview") && doc.id !== "profile")] : ranked;
-  for (const { doc } of ordered) {
-    const count = perProject.get(doc.project ?? "profile") ?? 0;
-    if (count >= (direct.length === 1 ? 4 : 2)) continue;
-    chosen.push(doc); perProject.set(doc.project ?? "profile", count + 1);
-    if (chosen.length === 6) break;
-  }
-  const projectKeys = [...new Set(chosen.map((d) => d.project).filter(Boolean))];
-  const related: ChatProject[] = projectKeys.map((key) => {
-    const p = projects.find((p) => architectureKeyByProject[p.title as keyof typeof architectureKeyByProject] === key)!;
-    return { title: p.title, key: key!, description: p.description };
-  });
-  return { documents: chosen, sources: chosen.map((doc) => doc.source), projects: related };
-}
-
 export function instantAnswer(question: string): string | null {
-  if (/^(hi|hello|hey|help|what can you do)[!?.\s]*$/i.test(question.trim())) return "I’m Neo, Shivam’s portfolio assistant. Ask about a project’s implementation, compare stacks, explore architecture, or find his contact details. My answers use reviewed project notes and source files.";
-  if (/\b(contact|hire|resume|résumé|\bcv\b|email|linkedin)\b/i.test(question) && !/\b(project|implement|auth|system|integrat)\b/i.test(question)) return `You can reach Shivam at ${personalInfo.email}. He is a full-stack developer based in India, available for select work.\n\nRésumé: ${personalInfo.resume}\nLinkedIn: ${personalInfo.linkedin}\nGitHub: ${personalInfo.github}\n\nFor rates, dates, or detailed employment history, please contact him directly.`;
-  if (/^(what (have you|has shivam) (built|made)|(?:list|show|what are|tell me about) (?:me )?(?:all |your |the |his )?projects)[?.!\s]*$/i.test(question.trim())) return `Shivam’s portfolio includes ${projects.length} projects:\n\n${projects.map((p) => `• ${p.title}: ${p.description}`).join("\n\n")}\n\nAsk about any one of these to explore its implementation and source references.`;
-  return null;
+    if (/^(?:neo[,!\s]+)?(hi|hello|hey|help|who are you|what can you do)[!?.\s]*$/i.test(question.trim()))
+        return 'I’m Neo, Shivam’s portfolio assistant. I explain his projects using reviewed code and source-linked notes. Ask about implementation, compare projects, or find his contact details.';
+    if (conversationTopic(question, []).ambiguousNeo)
+        return 'Do you mean Neo, this portfolio chatbot, or Neo, the Python desktop voice-assistant project? I can explain either.';
+    if (!mentionedProjects(question).length && /\b(gpa|salary|birthday|phone number|graduation date|degree|employer)\b/i.test(question))
+        return 'I don’t have verified portfolio information for that personal detail. Please contact Shivam directly rather than relying on a guessed answer.';
+    if (/\bwhy\b.*\b(personally|shivam)\b|\bwhy did (you|he) choose\b/i.test(question))
+        return 'The reviewed sources document the implementation, but I don’t have a verified record of Shivam’s personal rationale for that choice. I can explain the implemented design and discuss general tradeoffs separately.';
+    if (!mentionedProjects(question).length && /\b(contact|hire|resume|résumé|cv|email|linkedin)\b/i.test(question) && !/\b(implement|auth|system|integration|provider)\b/i.test(question))
+        return `You can reach Shivam at ${personalInfo.email}. He is a full-stack developer based in India, available for select work.\n\nRésumé: ${personalInfo.resume}\nLinkedIn: ${personalInfo.linkedin}\nGitHub: ${personalInfo.github}\n\nFor rates, dates or detailed employment history, contact him directly.`;
+    if (/^(what (have you|has shivam) (built|made)|(?:list|show|what are|tell me about) (?:me )?(?:all |your |the |his )?projects)[?.!\s]*$/i.test(question.trim()))
+        return `Shivam’s portfolio includes ${projects.length} projects:\n\n${projects.map(p => `• ${p.title}: ${p.description}`).join('\n\n')}\n\nAsk about one to explore its implementation and source references.`;
+    return null;
 }
-
-export function notesAnswer(question: string, history: ChatTurn[] = []) {
-  const retrieved = retrieve(question, history);
-  const text = instantAnswer(question) ?? (retrieved.documents.length
-    ? `From the reviewed project notes:\n\n${retrieved.documents.slice(0, 3).map((d) => `${d.title}\n${d.text}`).join("\n\n")}\n\n${[...new Set(retrieved.documents.slice(0, 3).filter((d) => d.project).map((d) => architectures[d.project!].caveat))].map((note) => `Implementation note: ${note}`).join("\n\n")}`
-    : "I don’t have verified portfolio information for that question. Ask about Shivam’s projects, skills, architecture, or contact details. I can’t confirm private information or topics outside these sources.");
-  return { ...retrieved, text };
+export function notesAnswer(question: string, history: ChatTurn[] = [], hint?: ChatContext) {
+    const result = retrieve(question, history, hint);
+    const instant = instantAnswer(question);
+    const selected = result.documents.slice(0, 3);
+    const text = instant ?? (result.topic.needsClarification ? 'Which project or feature do you mean? Name one and I can explain its actual implementation.' : selected.length ? `From the reviewed sources:\n\n${selected.map((d) => `${d.title}\n${d.text} [S${result.documents.indexOf(d) + 1}]`).join('\n\n')}` : 'I don’t have verified portfolio information for that question. Ask about Shivam’s projects, skills, architecture or contact details.');
+    const context: ChatContext = { projects: (result.topic.focus.length ? result.topic.focus : result.projects.map(p => p.key)).slice(0, 6), question: result.topic.query.slice(0, 800) };
+    return { ...result, text, context };
 }
-
-export function modelContext(documents: Document[]) {
-  const notes = [...new Set(documents.filter((d) => d.project).map((d) => architectures[d.project!].caveat))].join("\n");
-  return `Important source limitations: ${notes}\n\n${documents.map((d, i) => `[S${i + 1}] ${d.title}\n${d.text}`).join("\n\n")}`.slice(0, 6500);
+export function packContext(documents: KnowledgeDocument[], maxCharacters = 6500) {
+    const selected: KnowledgeDocument[] = [];
+    const blocks: string[] = [];
+    // Include limitations once and pack whole records; never cut a record mid-fact.
+    const caveats = [...new Set(documents.filter(d => d.project).map(d => architectures[d.project!].caveat))];
+    const prefix = `Source scope: pinned snapshots, not live infrastructure checks. Relevant limitations: ${caveats.join(' ')}\n\n`;
+    let used = prefix.length;
+    for (const doc of documents) {
+        const block = `[S${selected.length + 1}] ${doc.title}\n${doc.text}`;
+        if (used + block.length + 2 > maxCharacters)
+            continue;
+        selected.push(doc);
+        blocks.push(block);
+        used += block.length + 2;
+    }
+    return { text: prefix + blocks.join('\n\n'), documents: selected, sources: selected.map(d => d.source) };
 }
+export function modelContext(documents: KnowledgeDocument[]) { return packContext(documents).text; }
