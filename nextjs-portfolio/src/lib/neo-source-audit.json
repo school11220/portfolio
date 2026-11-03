@@ -1,0 +1,354 @@
+{
+  "market": {
+    "repository": "Hrudai-Nirmal/MajorProject-new",
+    "revision": "ee61ca71b213ea2c793de0839d8a9be09bab7b28",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "README.md": {
+        "verified": true,
+        "lines": 63
+      },
+      "backend/app/routers/chat.py": {
+        "verified": true,
+        "lines": 25
+      },
+      "backend/app/services/gemini_service.py": {
+        "verified": true,
+        "lines": 34
+      },
+      "backend/app/services/groq_service.py": {
+        "verified": true,
+        "lines": 70
+      },
+      "backend/schema.sql": {
+        "verified": true,
+        "lines": 150
+      },
+      "frontend/app/chat/page.tsx": {
+        "verified": true,
+        "lines": 192
+      },
+      "scripts/embed_and_store.py": {
+        "verified": true,
+        "lines": 113
+      }
+    },
+    "workingTree": false
+  },
+  "detection": {
+    "repository": "shivam2931120/MajorProject",
+    "revision": "479934b5e340f9c755285f6d53bcc4e584d9b1c4",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "scripts/import_kitti.py": {
+        "verified": true,
+        "lines": 191
+      },
+      "src/infer.py": {
+        "verified": true,
+        "lines": 106
+      },
+      "src/models/backbone.py": {
+        "verified": true,
+        "lines": 34
+      },
+      "src/models/baseline_cnn.py": {
+        "verified": true,
+        "lines": 36
+      },
+      "src/models/hybrid_cnn_transformer.py": {
+        "verified": true,
+        "lines": 93
+      },
+      "src/train.py": {
+        "verified": true,
+        "lines": 265
+      }
+    },
+    "workingTree": false
+  },
+  "nexus": {
+    "repository": "shivam2931120/Nexus",
+    "revision": "f3225837b0145cf6e3768e02bcaa90f8adf5085e",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "backend/src/main/java/com/nexus/chat/WebSocketConfig.java": {
+        "verified": true,
+        "lines": 161
+      },
+      "backend/src/main/java/com/nexus/enterprise/ProviderDiagnosticsController.java": {
+        "verified": true,
+        "lines": 113
+      },
+      "backend/src/main/java/com/nexus/security/SecurityConfig.java": {
+        "verified": true,
+        "lines": 138
+      },
+      "backend/src/main/java/com/nexus/workspace/WorkspaceController.java": {
+        "verified": true,
+        "lines": 94
+      },
+      "backend/src/main/resources/db/migration/V1__foundation.sql": {
+        "verified": true,
+        "lines": 46
+      },
+      "frontend/app/login/page.tsx": {
+        "verified": true,
+        "lines": 76
+      },
+      "frontend/components/AppShell.tsx": {
+        "verified": true,
+        "lines": 94
+      }
+    },
+    "workingTree": true
+  },
+  "bb84": {
+    "repository": "shivam2931120/bb8_messenger_app",
+    "revision": "9d1dd49d11c3a054a07ef66611ccd3cb876061ce",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "app.py": {
+        "verified": true,
+        "lines": 3077
+      },
+      "static/chat.js": {
+        "verified": true,
+        "lines": 3847
+      }
+    },
+    "workingTree": false
+  },
+  "securevault": {
+    "repository": "shivam2931120/SecureVault",
+    "revision": "02dad3de8389b1d38003b0ad3bf0a90ccaa006bb",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "app/api/vault/route.ts": {
+        "verified": true,
+        "lines": 58
+      },
+      "app/vault/add/page.tsx": {
+        "verified": true,
+        "lines": 95
+      },
+      "app/vault/page.tsx": {
+        "verified": true,
+        "lines": 329
+      },
+      "lib/crypto.ts": {
+        "verified": true,
+        "lines": 266
+      },
+      "lib/supabase.ts": {
+        "verified": true,
+        "lines": 373
+      },
+      "stores/authStore.ts": {
+        "verified": true,
+        "lines": 100
+      }
+    },
+    "workingTree": false
+  },
+  "movie": {
+    "repository": "shivam2931120/TheMovie",
+    "revision": "d2240c74229c2cc5194614ac65508cc9289748a2",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "ml/train_feedback.py": {
+        "verified": true,
+        "lines": 387
+      },
+      "src/app/api/ai-recommend/route.ts": {
+        "verified": true,
+        "lines": 205
+      },
+      "src/app/discover/page.tsx": {
+        "verified": true,
+        "lines": 385
+      },
+      "src/app/layout.tsx": {
+        "verified": true,
+        "lines": 88
+      },
+      "src/lib/server/catalogue.ts": {
+        "verified": true,
+        "lines": 24
+      },
+      "src/lib/server/db.ts": {
+        "verified": true,
+        "lines": 11
+      },
+      "src/proxy.ts": {
+        "verified": true,
+        "lines": 29
+      }
+    },
+    "workingTree": false
+  },
+  "neo": {
+    "repository": "shivam2931120/Neo",
+    "revision": "7e12a12a97f3526c09f210fa4bae62249de1a280",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "neo.py": {
+        "verified": true,
+        "lines": 1263
+      }
+    },
+    "workingTree": false
+  },
+  "sms": {
+    "repository": "shivam2931120/sms",
+    "revision": "09a8732445b5b7431ac056ad1d1fa35ef5686633",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "app/__init__.py": {
+        "verified": true,
+        "lines": 78
+      },
+      "app/models.py": {
+        "verified": true,
+        "lines": 281
+      },
+      "app/routes/admin.py": {
+        "verified": true,
+        "lines": 1549
+      },
+      "app/routes/auth.py": {
+        "verified": true,
+        "lines": 134
+      },
+      "app/templates/base.html": {
+        "verified": true,
+        "lines": 377
+      },
+      "config.py": {
+        "verified": true,
+        "lines": 111
+      }
+    },
+    "workingTree": false
+  },
+  "attendify": {
+    "repository": "shivam2931120/attendify",
+    "revision": "cf24ebfe9ea66c1849786b511995e99b5a2257cf",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "app.js": {
+        "verified": true,
+        "lines": 63
+      },
+      "public/index.html": {
+        "verified": true,
+        "lines": 1266
+      },
+      "public/js/main.js": {
+        "verified": true,
+        "lines": 140
+      },
+      "routes/api.js": {
+        "verified": true,
+        "lines": 521
+      },
+      "services/calendarService.js": {
+        "verified": true,
+        "lines": 56
+      },
+      "services/dataService.js": {
+        "verified": true,
+        "lines": 283
+      }
+    },
+    "workingTree": false
+  },
+  "eventhub": {
+    "repository": "shivam2931120/EventHub",
+    "revision": "28effad60921092b6f104b62e5eb99509f6aa051",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "app/api/checkin/route.ts": {
+        "verified": true,
+        "lines": 164
+      },
+      "app/api/events/route.ts": {
+        "verified": true,
+        "lines": 66
+      },
+      "app/api/razorpay/verify/route.ts": {
+        "verified": true,
+        "lines": 130
+      },
+      "app/api/tickets/route.ts": {
+        "verified": true,
+        "lines": 188
+      },
+      "app/event/[id]/page.tsx": {
+        "verified": true,
+        "lines": 913
+      },
+      "lib/prisma.ts": {
+        "verified": true,
+        "lines": 198
+      },
+      "prisma/schema.prisma": {
+        "verified": true,
+        "lines": 189
+      }
+    },
+    "workingTree": false
+  },
+  "editorial": {
+    "repository": "shivam2931120/realtime_collab",
+    "revision": "a1a8b8c6982e75822840abf530965d8cc0b38a11",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "backend/src/controllers/aiController.ts": {
+        "verified": true,
+        "lines": 41
+      },
+      "backend/src/middleware/authMiddleware.ts": {
+        "verified": true,
+        "lines": 59
+      },
+      "backend/src/routes/docRoutes.ts": {
+        "verified": true,
+        "lines": 108
+      },
+      "backend/src/sockets/index.ts": {
+        "verified": true,
+        "lines": 306
+      },
+      "backend/src/utils/yjsCollaboration.ts": {
+        "verified": true,
+        "lines": 85
+      },
+      "frontend/src/pages/Editor.tsx": {
+        "verified": true,
+        "lines": 3716
+      }
+    },
+    "workingTree": false
+  },
+  "unix": {
+    "repository": "shivam2931120/unix_mini_project",
+    "revision": "3fb4edf5f6eb26a81019b2b194ec673bd33d767a",
+    "reviewedAt": "2026-11-02",
+    "files": {
+      "proc_manager.c": {
+        "verified": true,
+        "lines": 255
+      },
+      "sched_sim.c": {
+        "verified": true,
+        "lines": 472
+      },
+      "unix.sh": {
+        "verified": true,
+        "lines": 405
+      }
+    },
+    "workingTree": false
+  }
+}

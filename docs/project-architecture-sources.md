@@ -14,7 +14,7 @@ The portfolio maps describe the inspected application code. Reviewed revisions a
 | Shikshan | shivam2931120/sms | 09a8732 | Flask app factory/blueprints, Flask-Login, Jinja templates, SQLAlchemy models/config |
 | Attendify | shivam2931120/attendify | cf24ebf | Express entry, protected API routes, static browser client, Clerk private metadata services |
 | EventHub | shivam2931120/EventHub | 28effad | Next.js ticket/payment/check-in routes, Prisma schema, ticket fallback, QR scanner |
-| Editorial | shivam2931120/realtime_collab | e3e8dac | React/Tiptap editor, Express auth/routes, Socket.IO, Yjs persistence, Supabase schema |
+| Editorial | shivam2931120/realtime_collab | a1a8b8c | React/Tiptap editor, Express auth/routes, Socket.IO, Yjs persistence, Supabase schema |
 | UNIX Utility Toolkit | shivam2931120/unix_mini_project | 3fb4edf | Bash launcher/system commands, `proc_manager.c`, `sched_sim.c`, Zenity calls |
 
 ## Important distinctions found in the code
@@ -46,3 +46,5 @@ Architecture dialogs omit introductory copy, provenance banners, written step li
 ## Production deployment
 
 The production Vercel project `shivam-portfolio` is connected to `school11220/portfolio`, branch `main`. Its Root Directory must be `nextjs-portfolio`, where the Next.js package and build script live. Push releases to that repository using the connected GitHub account so Vercel can verify the commit author.
+
+Neo source refresh (2026-11-02): all 12 repositories were checked again. Editorial was updated to a1a8b8c; the reviewed backend source paths are unchanged and its updated editor source was inspected. The complete pinned file manifest lives in `nextjs-portfolio/src/lib/neo-source-audit.json`.
